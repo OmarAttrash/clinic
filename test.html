@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>
+			Test-1
+		</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		
+			$.ajax({
+					type: 'GET',
+					headers: {
+						'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+						'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+						'X-Parse-Session-Token': "kEEAD7aaGW0IKGNov7lBs6QIH" 
+				},
+					url: "https://api.parse.com/1/users/me",
+					
+					contentType: "application/json"
+				}).done(function(data){
+				
+					console.dir(data);
+				});
+		});
+	</script>
+	</head>
+	<body>
+	</body>
+</html>
