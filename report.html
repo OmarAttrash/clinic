@@ -11,6 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 <!-- Custom Theme files -->
 <!--theme-style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
@@ -20,9 +21,287 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 <!--//fonts-->
-   
+   <script>
+        $(document).ready(function(){
+            /*-------------walking--------------------------*/
+              $("input[name=walking]:radio").change(function () {
+                    if(this.value == "option2"){
+                        $("#walking-modal").modal();
+                    }else{
+                        $("#walking-res").text("");
+                    }
+              });
+            $("#walking-btn").click(function(){
+                $("#walking-res").text($("input[name=walking-modal]:checked").val());
+            });
+            /*-------------walking-end----------------------*/
+            /*-------------ranges--------------------------*/
+             $("input[name=ranges]:radio").change(function () {
+                    if(this.value == "option2"){
+                        $("#ranges-modal").modal();
+                    }else{
+                        $("#ranges-res").text("");
+                    }
+              });
+             $("#ranges-btn").click(function(){
+                 var str="";
+                 for(var i=0; i< $("input[name=ranges-modal]:checked").length;i++){
+                     var box=$("input[name=ranges-modal]:checked")[i];
+                    str+=(box).value;
+                    str+=":";
+                    str+=$(box).parent().siblings()[0].value;
+                    str+="<br>"
+                 }
+                  $("#ranges-res").html(str);
+                });
+             $("input[name=ranges-modal]:checkbox").change(function () {
+                if($("input[name=ranges-modal]:checked").length>6){
+                 alert("You can choose up to 6!");  
+                    $(this).attr('checked', false);
+                }
+             });
+            /*-------------ranges-end----------------------*/
+            /*-------------muscles--------------------------*/
+             $("input[name=muscles]:radio").change(function () {
+                    if(this.value == "option2"){
+                        $("#muscles-modal").modal();
+                    }else{
+                        $("#muscles-res").text("");
+                    }
+              });
+             $("#muscles-btn").click(function(){
+                 var str="";
+                str=$("#muscles-text").val().replace(/\n/g, '<br/>');
+                  $("#muscles-res").html(str);
+                });
+            
+            /*-------------muscles-end----------------------*/
+            
+        
+        });
+    
+    
+    
+    </script>
 </head>
 <body>
+
+    <!-- ||||||||||||||||||||||||||---muscles-modal--- ||||||||||||||||||||||||||||||||||| -->
+<div class="modal fade" id="muscles-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">הליכה</h4>
+      </div>
+      <div class="modal-body">
+         <textarea rows="5" class="form-control" id="muscles-text"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="muscles-btn" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ||||||||||||||||||||||||||---muscles-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+
+    
+    
+    
+<!-- ||||||||||||||||||||||||||---walking-modal--- ||||||||||||||||||||||||||||||||||| -->
+<div class="modal fade" id="walking-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">הליכה</h4>
+      </div>
+      <div class="modal-body">
+          <div class="radio">
+            <label>
+             <input type="radio" name="walking-modal"value="בעזרת קביים" >
+                    בעזרת קביים
+            </label>
+          </div>
+          <div class="radio">
+          <label>
+             <input type="radio" name="walking-modal" value="בעזרת קביים" >
+                    בעזרת קביים
+            </label>
+          </div>
+          <div class="radio">
+          <label>
+             <input type="radio" name="walking-modal" value="ללא אביזר עזר" >
+                    ללא אביזר עזר
+            </label>
+          </div>
+          <div class="radio">
+          <label>
+             <input type="radio" name="walking-modal"  value="N.W.B" >
+                   N.W.B
+            </label>
+          </div>
+          <div class="radio">
+           <label>
+             <input type="radio" name="walking-modal"  value="צליעה" >
+                 צליעה
+            </label>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="walking-btn" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ||||||||||||||||||||||||||---walking-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+
+    
+<!-- ||||||||||||||||||||||||||---ranges-modal--- ||||||||||||||||||||||||||||||||||| -->
+<div class="modal fade" id="ranges-modal" dir="ltr" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">טווחים</h4>
+      </div>
+      <div class="modal-body">
+          <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal"value="Flex" >
+                <span> Flex:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+         <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal"value="Ext" >
+                <span> Ext:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+         <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="DFlex" >
+                <span>  D.Flex:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="PFlex" >
+                <span>P.Flex:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+          <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Abd" >
+                <span>Abd:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Add" >
+                <span> Add:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Introt" >
+                <span> Int rot:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Extrot" >
+                <span> Ext rot:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Rot" >
+                <span>Rot:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+            <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Inver" >
+                <span>Inver:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+            <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Ever" >
+                <span>  Ever:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+          <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Sup" >
+                <span> Sup:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="Pron" >
+                <span>  Pron:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="LTROT" >
+                <span> LT ROT:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="RTROT" >
+                <span> RT ROT:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+            <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="LTRTROT" >
+                <span>LT+RT ROT:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+           <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="ulnadeve" >
+                <span>  ulna deve:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+          <div class="radio">
+            <label>
+             <input type="checkbox" name="ranges-modal" value="radialdeve" >
+            <span> radial deve:</span>
+            </label>
+              <input class="form-control" type="text" value="0">
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="ranges-btn" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ||||||||||||||||||||||||||---ranges-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+    
+    
+    
+    
     <nav class="navbar .navbar-fixed-top navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -55,19 +334,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div class="search">
 						<div >
                             <h3>פרטי המטופל</h3>
-						      <ul class="patient-info" style="height:100px;">
+						     <ul class="patient-info" style="height:150px;">
+                                   <li><span>מספר חולה:</span>xxxxx</li>     
                                     <li><span>תז:</span>xxxxx</li>         
                                   <li><span>שם פרטי:</span>xxxxx</li>
                                   <li><span>שם  משפחה:</span>xxxxx</li>
                                   <li><span>יום הולדת:</span>xxxxx</li>
+                                    <li><span>רופה מפנה:</span>xxxxx</li>
+                                   <li><span>מוסד ממן:</span>xxxxx</li>
                             </ul>
 						</div>
 							</div>
 
 					<div class="clearfix"> </div>
                    	<div class="col-md-12 event-at">
-                          <div class="col-md-8" style="float:right;">
+                          <div class="col-xs-12 col-md-8" style="float:right;">
                               <div class=" report-element">
+                                   <div class="row">
+                                    <div class="col-md-3"  style="float:right;">אבחנה:</div>
+                                    <div class="col-md-9"><input type="text" class="form-control"/></div>
+                                  </div>
                                 <div class="row">
                                     <div class="col-md-3"  style="float:right;">הסטוריה:</div>
                                     <div class="col-md-9"> <textarea class="form-control" rows="7"></textarea></div>
@@ -107,77 +393,122 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                         
                         </div>
-                        <div class="col-md-4"  style="float:right;">
+                        <div class="col-xs-12 col-md-4"  style="float:right;">
                             <div class=" report-element">
                                 <div class="row">
                                     <h4>טווחים</h4>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                        <input type="radio" name="ranges" value="option1" checked>
                                         מלא
                                       </label>
                                     </div>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                        <input type="radio" name="ranges" value="option2">
                                         חסר
                                       </label>
+                                    </div>
+                                        <div class="res" id="ranges-res"></div>
+                                    <div>
+                                    
                                     </div>
                                 </div>
                                 <div class="row">
                                     <h4>כח שרירים</h4>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked>
+                                        <input type="radio" name="muscles" value="option1" checked>
                                         מלא
                                       </label>
                                     </div>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2">
+                                        <input type="radio" name="muscles"  value="option2">
                                         חסר
                                       </label>
                                     </div>
+                                         <div class="res" id="muscles-res"></div>
+                                
                                 </div>
                                 <div class="row">
                                     <h4>הליכה עצמית</h4>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked>
+                                        <input type="radio" name="walking" value="option1" checked>
                                         כן
                                       </label>
                                     </div>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2">
+                                        <input type="radio" name="walking" value="option2">
                                         לא
                                       </label>
                                     </div>
+                                    <div class="res" id="walking-res"></div>
                                 </div>
                                  <div class="row">
                                     <h4>פעילות גופנית</h4>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked>
+                                        <input type="radio" name="activity" id="optionsRadios1" value="option1" checked>
                                         כן
                                       </label>
                                     </div>
                                     <div class="radio">
                                       <label>
-                                        <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2">
+                                        <input type="radio" name="activity" id="optionsRadios2" value="option2">
                                         לא
                                       </label>
                                     </div>
                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-3"  style="float:right;">בדיקות אחירות:</div>
+                                    <div class="col-md-9"> <textarea class="form-control" rows="6"></textarea></div>
+                                </div>
                             </div>
                         
                         </div>
+                        
+                        
+                        
+                        <div class="col-xs-12 col-md-12"  style="float:right;">
+                            <div class=" report-element">
+                                <div class="row">
+                                    <div class="col-md-3"  style="float:right;">סיכום:</div>
+                                    <div class="col-md-9"> <textarea class="form-control" rows="6"></textarea></div>
+                                </div>
+                                <div class="row">
+                                      <div class="col-md-3"  style="float:right;">המטרות הושגו האופן:</div>
+                                    <div class="col-md-9"> <input class="form-control" type="text"></div>
+                                </div>
+                                <div class="row">
+                                      <div class="col-md-3"  style="float:right;">התמדה בתרגול עצמי:</div>
+                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
+                                </div>
+                                 <div class="row">
+                                  <div class="col-md-3"  style="float:right;">מידת שיתוף פעולה:</div>
+                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-3"  style="float:right;">יכולת חזרה לפעילות:</div>
+                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-3"  style="float:right;">הערות:</div>
+                                    <div class="col-md-9"> <textarea class="form-control" rows="2"></textarea></div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        
+                        
                       
                     </div>
 				</div>
 				<!---->
  <div class="col-xs-12">
-                                <input type="button" class="btn btn-piramry mine" value="הוספה"/>
+                                <input type="button" id="add-btn" class="btn btn-piramry mine" value="הוספה"/>
                             </div>
 			<div class="clearfix"> </div>
 						<p class="footer-class">Copyright © 2015 ClinicManagment </p>

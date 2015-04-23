@@ -58,6 +58,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 .report-element .row:last-child{
     border-bottom: none;
 }
+
+.res{
+    color:#07B9FB;
+    font-style: italic;
+}
+#ranges-modal .form-control{
+    display: inline;
+    width:60px;
+}
+#ranges-modal span{
+    width:80px;
+    line-height: 30px;
+    float: left;
+}
 /*_______________________*/
 body{
     direction: rtl;
@@ -98,7 +112,7 @@ h1,h2,h3,h4,h5,h6,label,p{
     float: left;
     height: 50px;
     width: 50px;
-    background-image: url(/images/logo.png);
+    background-image: url(../images/logo.png);
     background-size: contain;
     background-position:center;
 }
@@ -264,6 +278,8 @@ p.ten{
 .top-grid {
 	padding: 3em 0 0;
 }
+
+
 /*----*/
 .grid-date{
 	background:#5fabc7;
