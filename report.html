@@ -1,4 +1,4 @@
-<!--A Design by W3layouts 
+﻿<!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -7,514 +7,1092 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Clinic Managment</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<!-- Custom Theme files -->
-<script src="js/jquery.min.js"></script>
+    <title>Clinic Managment</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Custom Theme files -->
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-<!-- Custom Theme files -->
-<!--theme-style-->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
-<!--//theme-style-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!--fonts-->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-<!--//fonts-->
-   <script>
-        $(document).ready(function(){
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--//fonts-->
+    <script>
+        $(document).ready(function () {
             /*-------------walking--------------------------*/
-              $("input[name=walking]:radio").change(function () {
-                    if(this.value == "option2"){
-                        $("#walking-modal").modal();
-                    }else{
-                        $("#walking-res").text("");
-                    }
-              });
-            $("#walking-btn").click(function(){
+            $("input[name=walking]:radio").change(function () {
+                if (this.value == "option2") {
+                    $("#walking-modal").modal();
+                } else {
+                    $("#walking-res").text("");
+                }
+            });
+            $("#walking-btn").click(function () {
                 $("#walking-res").text($("input[name=walking-modal]:checked").val());
             });
             /*-------------walking-end----------------------*/
             /*-------------ranges--------------------------*/
-             $("input[name=ranges]:radio").change(function () {
-                    if(this.value == "option2"){
-                        $("#ranges-modal").modal();
-                    }else{
-                        $("#ranges-res").text("");
-                    }
-              });
-             $("#ranges-btn").click(function(){
-                 var str="";
-                 for(var i=0; i< $("input[name=ranges-modal]:checked").length;i++){
-                     var box=$("input[name=ranges-modal]:checked")[i];
-                    str+=(box).value;
-                    str+=":";
-                    str+=$(box).parent().siblings()[0].value;
-                    str+="<br>"
-                 }
-                  $("#ranges-res").html(str);
-                });
-             $("input[name=ranges-modal]:checkbox").change(function () {
-                if($("input[name=ranges-modal]:checked").length>6){
-                 alert("You can choose up to 6!");  
+            $("input[name=ranges]:radio").change(function () {
+                if (this.value == "option2") {
+                    $("#ranges-modal").modal();
+                } else {
+                    $("#ranges-res").text("");
+                }
+            });
+            $("#ranges-btn").click(function () {
+                var str = "";
+                for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
+                    var box = $("input[name=ranges-modal]:checked")[i];
+                    str += (box).value;
+                    str += ":";
+                    str += $(box).parent().siblings()[0].value;
+                    str += "<br>"
+                }
+                $("#ranges-res").html(str);
+            });
+            $("input[name=ranges-modal]:checkbox").change(function () {
+                if ($("input[name=ranges-modal]:checked").length > 6) {
+                    alert("You can choose up to 6!");
                     $(this).attr('checked', false);
                 }
-             });
+            });
             /*-------------ranges-end----------------------*/
             /*-------------muscles--------------------------*/
-             $("input[name=muscles]:radio").change(function () {
-                    if(this.value == "option2"){
-                        $("#muscles-modal").modal();
-                    }else{
-                        $("#muscles-res").text("");
-                    }
-              });
-             $("#muscles-btn").click(function(){
-                 var str="";
-                str=$("#muscles-text").val().replace(/\n/g, '<br/>');
-                  $("#muscles-res").html(str);
-                });
-            
+            $("input[name=muscles]:radio").change(function () {
+                if (this.value == "option2") {
+                    $("#muscles-modal").modal();
+                } else {
+                    $("#muscles-res").text("");
+                }
+            });
+            $("#muscles-btn").click(function () {
+                var str = "";
+                str = $("#muscles-text").val().replace(/\n/g, '<br/>');
+                $("#muscles-res").html(str);
+            });
+
             /*-------------muscles-end----------------------*/
-            
-        
+            /*-------------checks---------------------------*/
+            $("#update-checks").click(function () {
+                $("#checks-modal").modal();
+            });
+            $(".slide-head").click(function () {
+                $(this).siblings().slideToggle();
+            });
+            $("#checks-btn").click(function () {
+                var str = "";
+                for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
+                    var box = $("input[name=checks-modal]:checked")[i];
+                    str += (box).value;
+                    str += "<br>"
+                }
+                $("#checks-res").html(str);
+            });
+            /*------------checks-end------------------------*/
+            /*-------------reports---------------------------*/
+            $("#update-reports").click(function () {
+                $("#reports-modal").modal();
+            });
+            $("#reports-btn").click(function () {
+                var str = "";
+                for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
+                    var box = $("input[name=reports-modal]:checked")[i];
+                    str += (box).value;
+                    str += "<br>"
+                }
+                $("#reports-res").html(str);
+            });
+            /*------------reports-end------------------------*/
+
+
         });
-    
-    
-    
+
+
+
     </script>
 </head>
 <body>
+    <!-- ||||||||||||||||||||||||||---reports-modal--- ||||||||||||||||||||||||||||||||||| -->
+    <div class="modal fade" id="reports-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">אבחנות</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">ברך</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Knee"><span>Contusion of Knee/</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Knee pain"><span> Knee pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="P.i.p"><span>P.i.p</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Knee Arthorscopy"><span>Knee Arthorscopy</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="T.K.R"><span>T.K.R</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Dislocation patella closed"><span>Dislocation patella closed</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tear of M. meniscus"><span>Tear of M. meniscus</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tear of L. collateral"><span>Tear of L. collateral</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tear of M. collateral"><span>Tear of M. collateral</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tear of A.C.L"><span>Tear of A.C.L</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Patella Tendinitis"><span>Patella Tendinitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Bursitis popliteal"><span>Bursitis popliteal</span></label>
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">חבלות</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Knee/ or Lower Leg"><span>Contusion of Knee/ or Lower Leg</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Shoulder/ or upper Arm"><span>Contusion of Shoulder/ or upper Arm</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Elbow"><span>Contusion of Elbow</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Ankle"><span>Contusion of Ankle</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Contusion of Lower Limb"><span>Contusion of Lower Limb</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">ירך</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Pain Hip"><span>Pain Hip</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="T.H.R"><span>T.H.R</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Trochanteric Bursitis"><span>Trochanteric Bursitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tenosynovitis Hip"><span>Tenosynovitis Hip</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Muscle spasm Hip"><span>Muscle spasm Hip</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">כתף</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Shoulder pain"><span>Shoulder pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tear of Rotator cuff"><span>Tear of Rotator cuff</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Impingement syndrome"><span>Impingement syndrome</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Supraspinatus Tendinitis"><span>Supraspinatus Tendinitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Dislocation shoulder"><span>Dislocation shoulder</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">מרפק</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Lateral Epicondylitis (Tennis Elbow)"><span>Lateral Epicondylitis (Tennis Elbow)</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Elbow pain"><span>Elbow pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Medial Epicondylitis"><span>Medial Epicondylitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Ulnar nerve Lesion"><span>Ulnar nerve Lesion</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Dislocation Elbow"><span>Dislocation Elbow</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Olecranon Bursitis"><span>Olecranon Bursitis</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">שורש כף יד</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Hand pain"><span>Hand pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Trigger finger"><span>Trigger finger</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="C.T.S"><span>C.T.S</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="De Quervain’s Disease"><span>De Quervain’s Disease</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Hand Wound"><span>Hand Wound</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Dislocation finger"><span>Dislocation finger</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tendom Repair"><span>Tendom Repair</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Mallet finger"><span>Mallet finger</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Repair of Flexor"><span>Repair of Flexor</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Repair of Extensor"><span>Repair of Extensor</span></label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">עמוד שדרה גבי</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Thoracic spine pain"><span>Thoracic spine pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Tu Syndrome"><span>Tu Syndrome</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Kyphosis"><span>Kyphosis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Kyphoscoliosis"><span>Kyphoscoliosis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Scoliosis"><span>Scoliosis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Lordosis"><span>Lordosis</span></label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">עמוד שדרה מותני</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Low back pain"><span>Low back pain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Sciatica"><span>Sciatica</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Surgery Lumbar"><span>Surgery Lumbar</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Spinal Stenosis"><span>Spinal Stenosis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Spondylolysis"><span>Spondylolysis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Laminectomy"><span>Laminectomy</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Laminectomy"><span>Desictomy</span></label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">עמוד שדרה צווארי</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Cervicalgia"><span>Cervicalgia</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Whiplash injury"><span>Whiplash injury</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Radicular syndrome"><span>Radicular syndrome</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Torticollis"><span>Torticollis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Surgery cervical"><span>Surgery cervical</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">פה ולסת</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Temporomandibular joint pain"><span>Temporomandibular joint pain</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">קרסול/ כף רגל</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Plantar fasciitis"><span>Plantar fasciitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Ankle sprain"><span>Ankle sprain</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Achilles Tendinitis"><span>Achilles Tendinitis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Hallux valgus"><span>Hallux valgus</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Calcaneal spur"><span>Calcaneal spur</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">שברים</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Radius Distal"><span>Fracture of Radius Distal</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of ULNA"><span>Fracture of ULNA</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Ankle"><span>Fracture of Ankle</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Humerus"><span>Fracture of Humerus</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Tarsal Metatarsal Bones"><span>Fracture of Tarsal Metatarsal Bones</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of phalames hand"><span>Fracture of phalames hand</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of fibula"><span>Fracture of fibula</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Tibia"><span>Fracture of Tibia</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of Femur"><span>Fracture of Femur</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of metacarpal"><span>Fracture of metacarpal</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of scapula"><span>Fracture of scapula</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of vertebra"><span>Fracture of vertebra</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of elbow"><span>Fracture of elbow</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Fracture of pelvis"><span>Fracture of pelvis</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">כללי</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Bell’s palsy"><span>Bell’s palsy</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="R. Arthritis"><span>R. Arthritis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Osteoporosis"><span>Osteoporosis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Amputation"><span>Amputation</span></label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">נוירולוגיה</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="C.VA lt Hemiparesis"><span>C.VA lt Hemiparesis</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Head injury"><span>Head injury</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="Cerebral palsy"><span>Cerebral palsy</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="reports-modal" value="poliomylitis"><span>poliomylitis</span></label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="reports-btn" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ||||||||||||||||||||||||||---reports-modal/end--- ||||||||||||||||||||||||||||||||||| -->
     <!-- ||||||||||||||||||||||||||---muscles-modal--- ||||||||||||||||||||||||||||||||||| -->
-<div class="modal fade" id="muscles-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">הליכה</h4>
-      </div>
-      <div class="modal-body">
-         <textarea rows="5" class="form-control" id="muscles-text"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="muscles-btn" data-dismiss="modal">Done</button>
-      </div>
+    <div class="modal fade" id="muscles-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">כח שרירים</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea rows="5" class="form-control" id="muscles-text"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="muscles-btn" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<!-- ||||||||||||||||||||||||||---muscles-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+    <!-- ||||||||||||||||||||||||||---muscles-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+    <!-- ||||||||||||||||||||||||||---checks-modal--- ||||||||||||||||||||||||||||||||||| -->
+    <div class="modal fade" id="checks-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">בדיקות אחירות</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">בדיקות אורטונדית</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Tinels test"><span> Tinels test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Jackson's compression test"><span> Jackson's compression test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Carpel compression"><span>Carpel compression</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Reverse phadens test"><span>Reverse phadens test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Tinell's sign test"><span>Tinell's sign test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Finkelstein test"><span>Finkelstein test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Resisted isometric movement D.flex P.flex"><span>Resisted isometric movement D.flex P.flex</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Pinch test"><span>Pinch test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Allen test"><span>Allen test</span></label>
+                            </div>
 
-    
-    
-    
-<!-- ||||||||||||||||||||||||||---walking-modal--- ||||||||||||||||||||||||||||||||||| -->
-<div class="modal fade" id="walking-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">הליכה</h4>
-      </div>
-      <div class="modal-body">
-          <div class="radio">
-            <label>
-             <input type="radio" name="walking-modal"value="בעזרת קביים" >
-                    בעזרת קביים
-            </label>
-          </div>
-          <div class="radio">
-          <label>
-             <input type="radio" name="walking-modal" value="בעזרת קביים" >
-                    בעזרת קביים
-            </label>
-          </div>
-          <div class="radio">
-          <label>
-             <input type="radio" name="walking-modal" value="ללא אביזר עזר" >
-                    ללא אביזר עזר
-            </label>
-          </div>
-          <div class="radio">
-          <label>
-             <input type="radio" name="walking-modal"  value="N.W.B" >
-                   N.W.B
-            </label>
-          </div>
-          <div class="radio">
-           <label>
-             <input type="radio" name="walking-modal"  value="צליעה" >
-                 צליעה
-            </label>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="walking-btn" data-dismiss="modal">Done</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ||||||||||||||||||||||||||---walking-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">כתף</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Yerganson's test"><span>Yerganson's test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Push pull test"><span>Push pull test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Apperhansien test"><span>Apperhansien test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Drop arm test"><span>Drop arm test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Jobs test"><span>Jobs test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Neer's imprengem"><span>Neer's imprengem</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Isometric resistence at 20 abduction"><span>Isometric resistence at 20 abduction</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">ברך</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Lachman test"><span>Lachman test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Mcmarray's test"><span>Mcmarray's test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Squat test"><span>Squat test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Plica test"><span>Plica test</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">קרסול וכף רגל</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Antrior Drawer test"><span>Antrior Drawer test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Talartill test"><span>Talartill test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Side to side test"><span>Side to side test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="External Rotation test"><span>External Rotation test</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">מרפק</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Medical Collateral Ligament"><span>Medical Collateral Ligament</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Medical epicandylitis test"><span>Medical epicandylitis test</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">גב תחתון</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Slump test"><span>Slump test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Straight leg raising"><span>Straight leg raising</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Compression test"><span>Compression test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Geansien test"><span>Geansien test</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Active straight leg raising"><span>Active straight leg raising</span></label>
+                            </div>
 
-    
-<!-- ||||||||||||||||||||||||||---ranges-modal--- ||||||||||||||||||||||||||||||||||| -->
-<div class="modal fade" id="ranges-modal" dir="ltr" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">טווחים</h4>
-      </div>
-      <div class="modal-body">
-          <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal"value="Flex" >
-                <span> Flex:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-         <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal"value="Ext" >
-                <span> Ext:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-         <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="DFlex" >
-                <span>  D.Flex:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="PFlex" >
-                <span>P.Flex:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-          <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Abd" >
-                <span>Abd:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Add" >
-                <span> Add:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Introt" >
-                <span> Int rot:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Extrot" >
-                <span> Ext rot:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Rot" >
-                <span>Rot:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-            <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Inver" >
-                <span>Inver:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-            <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Ever" >
-                <span>  Ever:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-          <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Sup" >
-                <span> Sup:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="Pron" >
-                <span>  Pron:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="LTROT" >
-                <span> LT ROT:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="RTROT" >
-                <span> RT ROT:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-            <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="LTRTROT" >
-                <span>LT+RT ROT:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-           <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="ulnadeve" >
-                <span>  ulna deve:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-          <div class="radio">
-            <label>
-             <input type="checkbox" name="ranges-modal" value="radialdeve" >
-            <span> radial deve:</span>
-            </label>
-              <input class="form-control" type="text" value="0">
-          </div>
-          
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="ranges-btn" data-dismiss="modal">Done</button>
-      </div>
+                        </div>
+                    </div>
+                    <div class="modal-silde row">
+                        <div class="slide-head col-md-12">צואר</div>
+                        <div class="slide-body col-md-12">
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Compression test(צואר)"><span>Compression test(צואר)</span></label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="checkbox" name="checks-modal" value="Active movement of the cervical spine"><span>Active movement of the cervical spine</span></label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="checks-btn" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<!-- ||||||||||||||||||||||||||---ranges-modal/end--- ||||||||||||||||||||||||||||||||||| -->
-    
-    
-    
-    
+    <!-- ||||||||||||||||||||||||||---checks-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+    <!-- ||||||||||||||||||||||||||---walking-modal--- ||||||||||||||||||||||||||||||||||| -->
+    <div class="modal fade" id="walking-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">הליכה</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="walking-modal" value="בעזרת קביים">
+                            בעזרת קביים
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="walking-modal" value="בעזרת קביים">
+                            בעזרת קביים
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="walking-modal" value="ללא אביזר עזר">
+                            ללא אביזר עזר
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="walking-modal" value="N.W.B">
+                            N.W.B
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="walking-modal" value="צליעה">
+                            צליעה
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="walking-btn" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ||||||||||||||||||||||||||---walking-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+    <!-- ||||||||||||||||||||||||||---ranges-modal--- ||||||||||||||||||||||||||||||||||| -->
+    <div class="modal fade" id="ranges-modal" dir="ltr" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">טווחים</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Flex">
+                            <span> Flex:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Ext">
+                            <span> Ext:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="DFlex">
+                            <span>  D.Flex:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="PFlex">
+                            <span>P.Flex:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Abd">
+                            <span>Abd:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Add">
+                            <span> Add:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Introt">
+                            <span> Int rot:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Extrot">
+                            <span> Ext rot:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Rot">
+                            <span>Rot:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Inver">
+                            <span>Inver:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Ever">
+                            <span>  Ever:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Sup">
+                            <span> Sup:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="Pron">
+                            <span>  Pron:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="LTROT">
+                            <span> LT ROT:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="RTROT">
+                            <span> RT ROT:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="LTRTROT">
+                            <span>LT+RT ROT:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="ulnadeve">
+                            <span>  ulna deve:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="checkbox" name="ranges-modal" value="radialdeve">
+                            <span> radial deve:</span>
+                        </label>
+                        <input class="form-control" type="text" value="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="ranges-btn" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ||||||||||||||||||||||||||---ranges-modal/end--- ||||||||||||||||||||||||||||||||||| -->
+
+
     <nav class="navbar .navbar-fixed-top navbar-default">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-              <div id="logo"></div>
-            <a class="navbar-brand" href="#">ClinicManagment</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li ><a href="./search.html">חיפוש</a></li>
-              <li class="active"><a href="#" style="color:#5fabc7;font-weight:600;">הוספת טיפול</a></li>
-            </ul>
-
-          </div><!--/.nav-collapse -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div id="logo"></div>
+                <a class="navbar-brand" href="#">ClinicManagment</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./search.html">חיפוש</a></li>
+                    <li class="active"><a href="#" style="color:#5fabc7;font-weight:600;">הוספת טיפול</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </nav>
-    
-    
-    
-    
-    
+    </nav>
+
+
     <div class="header" style="padding-top:5px;">
-        
-				<div class="col-top">
-                        <div class="search">
-						<div >
-                            <h3>פרטי המטופל</h3>
-						     <ul class="patient-info" style="height:150px;">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-							</div>
-
-					<div class="clearfix"> </div>
-                   	<div class="col-md-12 event-at">
-                          <div class="col-xs-12 col-md-8" style="float:right;">
-                              <div class=" report-element">
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;">אבחנה:</div>
-                                    <div class="col-md-9"><input type="text" class="form-control"/></div>
-                                  </div>
-                                <div class="row">
-                                    <div class="col-md-3"  style="float:right;">הסטוריה:</div>
-                                    <div class="col-md-9"> <textarea class="form-control" rows="7"></textarea></div>
-                                  </div>
-                                    <div class="row">
-                                    <div class="col-md-3"  style="float:right;">מיקום ו אופי הבעיה:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;"> תדירות הסימפטומים:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;"> פעולות ותנוחות שמגבירות סימפטומים:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-md-3"  style="float:right;"> פעולות ותנוחות שמקלות סימפטומים:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;"> התנהגות סימפטומים במהלך היום:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;">מטרות הטיפול לטווח ארוך:</div>
-                                    <div class="col-md-9"> <textarea class="form-control" rows="2"></textarea></div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-md-3"  style="float:right;">מטרות הטיפול לטווח קצר:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                                    <div class="row">
-                                    <div class="col-md-3"  style="float:right;">תוכנית הטיפול:</div>
-                                    <div class="col-md-9"> <input type="text" class="form-control"/></div>
-                                  </div>
-                            </div>
-                        
+        <div class="col-top">
+            <div class="search" style="height:200px;">
+                <div class="col-md-3">
+                    Date
+                </div>
+                <div class="col-md-9">
+                    <h3>פרטי המטופל</h3>
+                    <ul class="patient-info">
+                        <li><span>מספר חולה:</span>xxxxx</li>
+                        <li><span>תז:</span>xxxxx</li>
+                        <li><span>שם פרטי:</span>xxxxx</li>
+                        <li><span>שם  משפחה:</span>xxxxx</li>
+                        <li><span>יום הולדת:</span>xxxxx</li>
+                        <li><span>רופה מפנה:</span>xxxxx</li>
+                        <li><span>מוסד ממן:</span>xxxxx</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="col-md-12 event-at">
+                <div class="col-xs-12 col-md-8" style="float:right;">
+                    <div class=" report-element">
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">אבחנה:</div>
+                            <div class="res" id="reports-res"></div>
+                            <div class="col-md-9"><input type="submit" value="עדכן" id="update-reports" class="form-control" /></div>
                         </div>
-                        <div class="col-xs-12 col-md-4"  style="float:right;">
-                            <div class=" report-element">
-                                <div class="row">
-                                    <h4>טווחים</h4>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="ranges" value="option1" checked>
-                                        מלא
-                                      </label>
-                                    </div>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="ranges" value="option2">
-                                        חסר
-                                      </label>
-                                    </div>
-                                        <div class="res" id="ranges-res"></div>
-                                    <div>
-                                    
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <h4>כח שרירים</h4>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="muscles" value="option1" checked>
-                                        מלא
-                                      </label>
-                                    </div>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="muscles"  value="option2">
-                                        חסר
-                                      </label>
-                                    </div>
-                                         <div class="res" id="muscles-res"></div>
-                                
-                                </div>
-                                <div class="row">
-                                    <h4>הליכה עצמית</h4>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="walking" value="option1" checked>
-                                        כן
-                                      </label>
-                                    </div>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="walking" value="option2">
-                                        לא
-                                      </label>
-                                    </div>
-                                    <div class="res" id="walking-res"></div>
-                                </div>
-                                 <div class="row">
-                                    <h4>פעילות גופנית</h4>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="activity" id="optionsRadios1" value="option1" checked>
-                                        כן
-                                      </label>
-                                    </div>
-                                    <div class="radio">
-                                      <label>
-                                        <input type="radio" name="activity" id="optionsRadios2" value="option2">
-                                        לא
-                                      </label>
-                                    </div>
-                                </div>
-                                 <div class="row">
-                                    <div class="col-md-3"  style="float:right;">בדיקות אחירות:</div>
-                                    <div class="col-md-9"> <textarea class="form-control" rows="6"></textarea></div>
-                                </div>
-                            </div>
-                        
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">הסטוריה:</div>
+                            <div class="col-md-9"> <textarea class="form-control" rows="7"></textarea></div>
                         </div>
-                        
-                        
-                        
-                        <div class="col-xs-12 col-md-12"  style="float:right;">
-                            <div class=" report-element">
-                                <div class="row">
-                                    <div class="col-md-3"  style="float:right;">סיכום:</div>
-                                    <div class="col-md-9"> <textarea class="form-control" rows="6"></textarea></div>
-                                </div>
-                                <div class="row">
-                                      <div class="col-md-3"  style="float:right;">המטרות הושגו האופן:</div>
-                                    <div class="col-md-9"> <input class="form-control" type="text"></div>
-                                </div>
-                                <div class="row">
-                                      <div class="col-md-3"  style="float:right;">התמדה בתרגול עצמי:</div>
-                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
-                                </div>
-                                 <div class="row">
-                                  <div class="col-md-3"  style="float:right;">מידת שיתוף פעולה:</div>
-                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-3"  style="float:right;">יכולת חזרה לפעילות:</div>
-                                         <div class="col-md-9"> <input class="form-control" type="text"></div>
-                                </div>
-                                 <div class="row">
-                                    <div class="col-md-3"  style="float:right;">הערות:</div>
-                                    <div class="col-md-9"> <textarea class="form-control" rows="2"></textarea></div>
-                                </div>
-                            </div>
-                        
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">מיקום ו אופי הבעיה:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
                         </div>
-                        
-                        
-                      
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;"> תדירות הסימפטומים:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמגבירות סימפטומים:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמקלות סימפטומים:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;"> התנהגות סימפטומים במהלך היום:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח ארוך:</div>
+                            <div class="col-md-9"> <textarea class="form-control" rows="2"></textarea></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח קצר:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">תוכנית הטיפול:</div>
+                            <div class="col-md-9"> <input type="text" class="form-control" /></div>
+                        </div>
                     </div>
-				</div>
-				<!---->
- <div class="col-xs-12">
-                                <input type="button" id="add-btn" class="btn btn-piramry mine" value="הוספה"/>
+                </div>
+                <div class="col-xs-12 col-md-4" style="float:right;">
+                    <div class=" report-element">
+                        <div class="row">
+                            <h4>טווחים</h4>
+                            <div class="radio">
+                                <label><input type="radio" name="ranges" value="option1" checked>מלא</label>
                             </div>
-			<div class="clearfix"> </div>
-						<p class="footer-class">Copyright © 2015 ClinicManagment </p>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="ranges" value="option2">
+                                    חסר
+                                </label>
+                            </div>
+                            <div class="res" id="ranges-res"></div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4>כח שרירים</h4>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="muscles" value="option1" checked>
+                                    מלא
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="muscles" value="option2">
+                                    חסר
+                                </label>
+                            </div>
+                            <div class="res" id="muscles-res"></div>
+                        </div>
+                        <div class="row">
+                            <h4>הליכה עצמית</h4>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="walking" value="option1" checked>
+                                    כן
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="walking" value="option2">
+                                    לא
+                                </label>
+                            </div>
+                            <div class="res" id="walking-res"></div>
+                        </div>
+                        <div class="row">
+                            <h4>פעילות גופנית</h4>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="activity" value="option1" checked>
+                                    כן
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="activity" value="option2">
+                                    לא
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4>בדיקות אחירות</h4>
+                            <div class="res" id="checks-res"></div>
+                            <div class="col-md-9"> <input type="submit" id="update-checks" class="form-control" value="עדכן"></div>
+                        </div>
+                    </div>
+                </div>
 
-	
+                <div class="col-xs-12 col-md-12" style="float:right;">
+                    <div class=" report-element">
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">סיכום:</div>
+                            <div class="col-md-9"> <textarea class="form-control" rows="6"></textarea></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">המטרות הושגו האופן:</div>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="radio" name="goals" value="option1" checked>
+                                    חלקי
+                                </label>
+                                <label>
+                                    <input type="radio" name="goals" value="option2">
+                                    מלא
+                                </label>
+                                <label>
+                                    <input type="radio" name="goals" value="option3">
+                                    לא ידוע
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">התמדה בתרגול עצמי:</div>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="radio" name="grade" value="option1" checked>
+                                    מרובה
+                                </label>
+                                <label>
+                                    <input type="radio" name="grade" value="option2">
+                                    בינונית
+                                </label>
+                                <label>
+                                    <input type="radio" name="grade" value="option3">
+                                    לא רלוונטי
+                                </label>
+                                <label>
+                                    <input type="radio" name="grade" value="option3">
+                                    מועטה
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">מידת שיתוף פעולה:</div>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="radio" name="will" value="option1" checked>
+                                    חלקי
+                                </label>
+                                <label>
+                                    <input type="radio" name="will" value="option2">
+                                    מלא
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">יכולת חזרה לפעילות:</div>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="radio" name="possible" value="option1" checked>
+                                    חלקי
+                                </label>
+                                <label>
+                                    <input type="radio" name="possible" value="option2">
+                                    מלא
+                                </label>
+                                <label>
+                                    <input type="radio" name="possible" value="option1" checked>
+                                    כן
+                                </label>
+                                <label>
+                                    <input type="radio" name="possible" value="option2">
+                                    לא
+                                </label>
+                                <label>
+                                    <input type="radio" name="possible" value="option2">
+                                    לא רלוונטי
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="float:right;">הערות:</div>
+                            <div class="col-md-9"> <textarea class="form-control" rows="2"></textarea></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!---->
+        <div class="col-xs-12">
+            <input type="button" id="add-btn" class="btn btn-piramry mine" value="הוספה" />
+        </div>
+        <div class="clearfix"> </div>
+        <p class="footer-class">Copyright © 2015 ClinicManagment </p>
+
     </div>
-
 </body>
 </html>

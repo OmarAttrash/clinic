@@ -72,6 +72,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     line-height: 30px;
     float: left;
 }
+.slide-head{
+    font-size: 18px;
+    font-style: bold;
+    width:100%;
+    background-color: #07B9FB;
+    color:#fff;
+    border-bottom: 1px solid #0299dB;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: inset 0 -3px 30px -2px #0299dB;
+}
+ .slide-head:hover{
+    background-color:#5fabc7; 
+}
+.modal-silde:last-child .slide-head{
+     border-bottom: none;
+}
+
+.slide-body .radio:last-child {
+     border-bottom: none;
+}
+.slide-body .radio {
+     border-bottom: 1px dashed #ccc;
+}
+.slide-body{
+    display: none;
+  
+}
 /*_______________________*/
 body{
     direction: rtl;
