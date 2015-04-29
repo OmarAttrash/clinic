@@ -1,4 +1,4 @@
-﻿<!--A Design by W3layouts 
+﻿<!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -7,21 +7,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Clinic Managment</title>
-<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<!-- Custom Theme files -->
-<script src="./js/jquery.min.js"></script>
+    <title>Clinic Managment</title>
+    <link href="./css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Custom Theme files -->
+    <script src="./js/jquery.min.js"></script>
     <script src="./js/jquery.cookie.js"></script>
-<!-- Custom Theme files -->
-<!--theme-style-->
-<link href="./css/style.css" rel="stylesheet" type="text/css" media="all" />	
-<!--//theme-style-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!--fonts-->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-<!--//fonts-->
-   <!----sessionClinic-->
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link href="./css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--//fonts-->
+    <!----sessionClinic-->
     <script>
         $(document).ready(function () {
             if ($.cookie("sessionClinic") == null) {
@@ -33,21 +33,76 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     headers: {
                         'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
                         'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                        'X-Parse-Session-Token:': $.cookie("sessionClinic")
+                        'X-Parse-Session-Token': $.cookie("sessionClinic")
                     },
                     url: "https://api.parse.com/1/functions/test",
                     contentType: "application/json"
                 }).success(function (data) {
-                    console.dir(data);
-                    //window.location.href = "./search.html";
+                    $("#searcher").click(function () {
+                        $.ajax({
+                            type: 'POST',
+                            headers: {
+                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                'X-Parse-Session-Token': $.cookie("sessionClinic")
+                            },
+                            data: JSON.stringify({ "text": $("#searchval").val() }),
+                            url: "https://api.parse.com/1/functions/Search",
+                            contentType: "application/json"
+                        }).success(function (data) {
+                            var str = "";
+                            data.result.forEach(function (patient) {
+                                str += '<a href="./patient.html?pid=' + patient.objectId + '">';
+                                str += '<div class="event-top"><div ><ul class="patient-info">';
+                                str += '<li><span>מספר חולה:</span>' + patient.patientNum + '</li>';
+                                str += '<li><span>תז:</span>' + patient.ID + '</li>';
+                                str += '<li><span>שם פרטי:</span>' + patient.firstName + '</li>';
+                                str += '<li><span>שם  משפחה:</span>' + patient.lastName + '</li>';
+                                str += '<li><span>יום הולדת:</span>' + patient.birthday + '</li>';
+                                str += '<li><span>רופה מפנה:</span>' + patient.doctor + '</li>';
+                                str += '<li><span>מוסד ממן:</span>' + patient.clinic + '</li>';
+                                str += '</ul></div><div class="clearfix"> </div></div></a>';
+                            });
+                            $("#patients").html(str);
+                        }).error(function (error) {
+                            alert("Something went wrong!");
+                        });
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        url: "https://api.parse.com/1/functions/LoadPatients",
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        var str = "";
+                        data.result.forEach(function (patient) {
+                            str += '<a href="./patient.html?pid=' + patient.objectId + '">';
+                            str += '<div class="event-top"><div ><ul class="patient-info">';
+                            str += '<li><span>מספר חולה:</span>' + patient.patientNum + '</li>';
+                            str += '<li><span>תז:</span>' + patient.ID + '</li>';
+                            str += '<li><span>שם פרטי:</span>' + patient.firstName + '</li>';
+                            str += '<li><span>שם  משפחה:</span>' + patient.lastName + '</li>';
+                            str += '<li><span>יום הולדת:</span>' + patient.birthday + '</li>';
+                            str += '<li><span>רופה מפנה:</span>' + patient.doctor + '</li>';
+                            str += '<li><span>מוסד ממן:</span>' + patient.clinic + '</li>';
+                            str += '</ul></div><div class="clearfix"> </div></div></a>';
+
+                        });
+                        $("#patients").append(str);
+                    }).error(function (error) {
+                        alert("Something went wrong!");
+                        window.location.href = "./index.html";
+                    });
+
                 }).error(function (e) {
-                    alert(e.responseText);
                     $.removeCookie('sessionClinic');
-                    //window.location.href = "./index.html";
+                    window.location.href = "./index.html";
 
                 });
-
-
             }
         });
     </script>
@@ -55,112 +110,46 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
     <nav class="navbar .navbar-fixed-top navbar-default">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-              <div id="logo"></div>
-            <a class="navbar-brand" href="#">ClinicManagment</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">חיפוש</a></li>
-              <li><a href="./addpatient.html">הוספת מטופל</a></li>
-            </ul>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div id="logo"></div>
+                <a class="navbar-brand" href="#">ClinicManagment</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">חיפוש</a></li>
+                    <li><a href="./addpatient.html">הוספת מטופל</a></li>
+                </ul>
 
-          </div><!--/.nav-collapse -->
+            </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </nav>
+    </nav>
     <div class="header" style="padding-top:5px;">
-				<div class="col-top">
-				    <div class="search">
-								<div class="search-in">
-									<form>
-										<input type="text" value="מטופל" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'מטופל';}">
-										<input type="submit" value="חיפוש">
-									</form>
-								</div>
-							</div>
-					<div class="clearfix"> </div>
-                   			<div class="col-md-12 event-at">
-			<div class="events-in">	
-                <a href="./patient.html">
-					<div class="event-top">
-						<div >
-						      <ul class="patient-info">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-                    </a>
-             					 <a href="./patient.html">
-					<div class="event-top">
-						<div >
-						     <ul class="patient-info">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-                    </a>
-     				 <a href="./patient.html">
-					<div class="event-top">
-						<div >
-						     <ul class="patient-info">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-                    </a>
-				 <a href="./patient.html">
-					<div class="event-top">
-						<div >
-						     <ul class="patient-info">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-                    </a>
-			
-				</div>
-			</div>
-				</div>
-				<!---->
+        <div class="col-top">
+            <div class="search">
+                <div class="search-in">
+                        <input type="text" id="searchval" value="מטופל" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'מטופל';}">
+                        <input type="submit" id="searcher" value="חיפוש">
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="col-md-12 event-at">
+                <div id="patients" class="events-in">
 
-			<div class="clearfix"> </div>
-						<p class="footer-class">Copyright © 2015 ClinicManagment </p>
+                </div>
+            </div>
+        </div>
+        <!---->
 
-		</div>
+        <div class="clearfix"> </div>
+        <p class="footer-class">Copyright © 2015 ClinicManagment </p>
+
+    </div>
 
 
 </body>

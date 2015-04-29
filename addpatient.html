@@ -1,4 +1,4 @@
-<!--A Design by W3layouts 
+﻿<!--A Design by W3layouts 
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -11,6 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
 <!-- Custom Theme files -->
 <!--theme-style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
@@ -20,7 +21,72 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 <!--//fonts-->
-   
+    <script>
+    var QueryString = function () {
+        // This function is anonymous, is executed immediately and
+        // the return value is assigned to QueryString!
+        var query_string = {};
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            // If first entry with this name
+            if (typeof query_string[pair[0]] === "undefined") {
+                query_string[pair[0]] = pair[1];
+                // If second entry with this name
+            } else if (typeof query_string[pair[0]] === "string") {
+                var arr = [query_string[pair[0]], pair[1]];
+                query_string[pair[0]] = arr;
+                // If third or later entry with this name
+            } else {
+                query_string[pair[0]].push(pair[1]);
+            }
+        }
+        return query_string;
+    }();
+    $(document).ready(function () {
+        if ($.cookie("sessionClinic") == null) {
+            window.location.href = "./index.html";
+        } else {
+            console.dir($.cookie("sessionClinic"));
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                },
+                url: "https://api.parse.com/1/functions/test",
+                contentType: "application/json"
+            }).success(function (data){
+                $("#add-p").click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        url: "https://api.parse.com/1/functions/AddPatient",
+                        data: JSON.stringify({ id: $("#pid").val(), firstName: $("#pfna").val(), lastName: $("#plna").val(), doctor: $("#pdoc").val(), clinic: $("#pcnc option:selected").text(), birthday: $("#pbrd").val(), patientNum: $("#pnum").val() }),
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        window.location.href = "./patient.html?pid=" + data.result.objectId;
+                    }).error(function (e) {
+                        alert("There is an error");
+
+                    });
+                })
+
+            }).error(function (e) {
+                $.removeCookie('sessionClinic');
+                window.location.href = "./index.html";
+
+            });
+        }
+    });
+    </script>
+
 </head>
 <body >
     <nav class="navbar .navbar-fixed-top navbar-default">
@@ -51,33 +117,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="col-top  col-md-offset-3   col-md-6">
                         <div class="row report-element">
                              <div class="row margin-top-10">
-                                  <div class="col-sm-3" style="float:right;">מספר חולה:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                  <div class="col-sm-3"  style="float:right;">מספר חולה:</div> 
+                                <div class="col-sm-9" ><input id="pnum" class="form-control" type="text" /></div> 
                             </div>
                              <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">תז:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                <div class="col-sm-9" ><input id="pid" class="form-control" type="text"/></div> 
                             </div>
                           <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">שם פרטי:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                <div class="col-sm-9" ><input id="pfna" class="form-control" type="text"/></div> 
                             </div>
                              <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">שם  משפחה:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                <div class="col-sm-9" ><input id="plna" class="form-control" type="text"/></div> 
                             </div>
                              <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">יום הולדת:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                <div class="col-sm-9" ><input id="pbrd" class="form-control" type="text"/></div> 
                             </div>
                                                         <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">רופה מפנה:</div> 
-                                <div class="col-sm-9" ><input class="form-control" type="text"/></div> 
+                                <div class="col-sm-9" ><input id="pdoc" class="form-control" type="text"/></div> 
                             </div>
                                                                                     <div class="row margin-top-10">
                                   <div class="col-sm-3" style="float:right;">מוסד ממן:</div> 
                                 <div class="col-sm-9" >
-                                    <select>
+                                    <select id="pcnc">
                                       <option value="volvo">כללית</option>
                                       <option value="saab">לאומית</option>
                                       <option value="mercedes">מאוחדת</option>
@@ -85,7 +151,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </div> 
                             </div>
                             <div class="col-xs-12">
-                                <input type="button" class="btn btn-piramry mine" value="הוספה"/>
+                                <input type="button" id="add-p" class="btn btn-piramry mine" value="הוספה"/>
                             </div>
 				        </div>
                     

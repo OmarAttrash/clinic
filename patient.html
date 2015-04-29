@@ -1,4 +1,4 @@
-<!--A Design by W3layouts 
+﻿<!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -7,125 +7,182 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Clinic Managment</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<!-- Custom Theme files -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<!-- Custom Theme files -->
-<!--theme-style-->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<!--//theme-style-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!--fonts-->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-<!--//fonts-->
-   
+    <title>Clinic Managment</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Custom Theme files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--//fonts-->
+    <script>
+        var QueryString = function () {
+            // This function is anonymous, is executed immediately and
+            // the return value is assigned to QueryString!
+            var query_string = {};
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                // If first entry with this name
+                if (typeof query_string[pair[0]] === "undefined") {
+                    query_string[pair[0]] = pair[1];
+                    // If second entry with this name
+                } else if (typeof query_string[pair[0]] === "string") {
+                    var arr = [query_string[pair[0]], pair[1]];
+                    query_string[pair[0]] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[pair[0]].push(pair[1]);
+                }
+            }
+            return query_string;
+        }();
+        $(document).ready(function () {
+            if (QueryString.pid == null || QueryString.pid == "") {
+                window.location.href = "./search.html";
+            }
+            if ($.cookie("sessionClinic") == null) {
+                window.location.href = "./index.html";
+            } else {
+                console.dir($.cookie("sessionClinic"));
+                $.ajax({
+                    type: 'POST',
+                    headers: {
+                        'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                        'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                        'X-Parse-Session-Token': $.cookie("sessionClinic")
+                    },
+                    url: "https://api.parse.com/1/functions/test",
+                    contentType: "application/json"
+                }).success(function (data) {
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        data: JSON.stringify({ id: QueryString.pid }),
+                        url: "https://api.parse.com/1/functions/GetPatient",
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        var str="";
+                        str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
+                        str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
+                        str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
+                        str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
+                        str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
+                        str += '<li><span>רופה מפנה:</span>' + data.result[0].doctor + '</li>';
+                        str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
+                        $("#patient-info").html(str);
+                    }).error(function (error) {
+                        alert(JSON.parse(error.responseText).error);
+                    });
+                    $("#addreport").click(function () {
+                        window.location.href = "./report.html?pid=" + QueryString.pid;  
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        data:  JSON.stringify({patientId:QueryString.pid}),
+                        url: "https://api.parse.com/1/functions/GetReports",
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        var str = "";
+                        data.result.forEach(function (report) {
+                            console.dir(report);
+                            str += '<a href="reporte.html?rid=' + report.objectId + '"><div class="event-top"><div><ul class="report-info">';
+                            str += '<li><span>אבחנה:</span>' + report.arg0 + '</li>';
+                            str += '<li><span>תאריך הפקה:</span>' + report.updatedAt + '</li>';
+                            str += '</ul></div><div class="clearfix"> </div></div></a>';
+                        });
+                        $("#reports").append(str);
+
+                    }).error(function (error) {
+                       // alert(JSON.parse(error.responseText).error);
+                    });
+
+                }).error(function (e) {
+                    $.removeCookie('sessionClinic');
+                    window.location.href = "./index.html";
+
+                });
+            }
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar .navbar-fixed-top navbar-default">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-              <div id="logo"></div>
-            <a class="navbar-brand" href="#">ClinicManagment</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li ><a href="./search.html">חיפוש</a></li>
-              <li><a href="./report.html" style="color:#5fabc7;font-weight:600;">הוספת טיפול</a></li>
-            </ul>
-
-          </div><!--/.nav-collapse -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div id="logo"></div>
+                <a class="navbar-brand" href="#">ClinicManagment</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./search.html">חיפוש</a></li>
+                    <li><input type="button" id="addreport" class="btn" style="color:#5fabc7;font-weight:600;margin-top:7px;" value="הוספת טיפול"></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </nav>
-    
-    
-    
-    
-    
+    </nav>
+
+
+
+
+
     <div class="header" style="padding-top:5px;">
-        
-				<div class="col-top">
-                        <div class="search">
-						<div >
-                              <ul class="patient-info" style="height:150px;">
-                                   <li><span>מספר חולה:</span>xxxxx</li>     
-                                    <li><span>תז:</span>xxxxx</li>         
-                                  <li><span>שם פרטי:</span>xxxxx</li>
-                                  <li><span>שם  משפחה:</span>xxxxx</li>
-                                  <li><span>יום הולדת:</span>xxxxx</li>
-                                    <li><span>רופה מפנה:</span>xxxxx</li>
-                                   <li><span>מוסד ממן:</span>xxxxx</li>
-                            </ul>
-						</div>
-							</div>
-				    <div class="search">
-								<div class="search-in">
-									<form>
-										<input type="text" value="טיפול" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'טיפול';}">
-										<input type="submit" value="חיפוש">
-									</form>
-								</div>
-							</div>
-					<div class="clearfix"> </div>
-                   			<div class="col-md-12 event-at">
-			<div class="events-in">	
-					<div class="event-top">
-						<div >
-						      <ul class="report-info">
-                                    <li><span>אבחנה:</span>xxxxx</li>         
-                                  <li><span>תאריך הפקה:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-             					<div class="event-top">
-						<div >
-						      <ul class="report-info">
-                                    <li><span>אבחנה:</span>xxxxx</li>         
-                                  <li><span>תאריך הפקה:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-     				<div class="event-top">
-						<div >
-						     <ul class="report-info">
-                                    <li><span>אבחנה:</span>xxxxx</li>         
-                                  <li><span>תאריך הפקה:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				
-					<div class="event-top">
-						<div >
-						       <ul class="report-info">
-                                    <li><span>אבחנה:</span>xxxxx</li>         
-                                  <li><span>תאריך הפקה:</span>xxxxx</li>
-                            </ul>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
 
-			
-				</div>
-			</div>
-				</div>
-				<!---->
+        <div class="col-top">
+            <div class="search">
+                <div>
+                    <ul class="patient-info" id="patient-info" style="height:150px;">
+                        <li><span>מספר חולה:</span>xxxxx</li>
+                        <li><span>תז:</span>xxxxx</li>
+                        <li><span>שם פרטי:</span>xxxxx</li>
+                        <li><span>שם  משפחה:</span>xxxxx</li>
+                        <li><span>יום הולדת:</span>xxxxx</li>
+                        <li><span>רופה מפנה:</span>xxxxx</li>
+                        <li><span>מוסד ממן:</span>xxxxx</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search">
+                <div class="search-in">
+                    <form>
+                        <input type="text" value="טיפול" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'טיפול';}">
+                        <input type="submit" value="חיפוש">
+                    </form>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="col-md-12 event-at">
+                <div class="events-in" id="reports">
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="clearfix"> </div>
+        <p class="footer-class">Copyright © 2015 ClinicManagment </p>
 
-			<div class="clearfix"> </div>
-						<p class="footer-class">Copyright © 2015 ClinicManagment </p>
-
-	
     </div>
-
 </body>
 </html>

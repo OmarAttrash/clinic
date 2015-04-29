@@ -46,9 +46,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             return query_string;
         }();
         $(document).ready(function () {
-            if (QueryString.pid == null || QueryString.pid == "") {
-                window.location.href = "./search.html";
-            }
             if ($.cookie("sessionClinic") == null) {
                 window.location.href = "./index.html";
             } else {
@@ -150,11 +147,152 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     /*------------reports-end------------------------*/
 
 
+                    /****************************************/
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        url: "https://api.parse.com/1/functions/GetReport",
+                        data: JSON.stringify({ objectId: QueryString.rid }),
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        for (var i = 0; i < $("input[name=reports-modal]").length; i++) {
+                            var box = $("input[name=reports-modal]")[i];
+                            if (box.value == data.result.arg0) {
+                                $(box).attr('checked', true);
+                            }
+                        }
+                        $("#reports-btn").trigger("click");
+                        $("#arg1").val(data.result.arg1);
+                        $("#arg2").val(data.result.arg2);
+                        $("#arg3").val(data.result.arg3);
+                        $("#arg4").val(data.result.arg4);
+                        $("#arg5").val(data.result.arg5);
+                        $("#arg6").val(data.result.arg6);
+                        $("#arg7").val(data.result.arg7);
+                        $("#arg8").val(data.result.arg8);
+                        $("#arg9").val(data.result.arg9);
+
+                        var vall = "option2";
+                        if (data.result.arg10.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=ranges]").length; i++) {
+                            if ($($("input[name=ranges]")[i]).val() == vall) {
+                                $($("input[name=ranges]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg10.res == "No") {
+                            for (var i = 0; i < data.result.arg10.arr.length; i++) {
+                                for (var j = 0; j < $("input[name=ranges-modal]").length; j++) {
+                                    var box = $("input[name=ranges-modal]")[j];
+                                    if ($(box).val() == data.result.arg10.arr[i].key) {
+                                        $(box).attr('checked', true);
+                                        $($(box).parent().siblings()[0]).val(data.result.arg10.arr[i].value);
+                                    }
+                                }
+                            }
+                            $("#ranges-btn").trigger("click");
+                        }
+
+                        var vall = "option2";
+                        if (data.result.arg11.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=muscles]").length; i++) {
+                            if ($($("input[name=muscles]")[i]).val() == vall) {
+                                $($("input[name=muscles]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg11.res == "No") {
+                            $("#muscles-text").val(data.result.arg11.text);
+                            $("#muscles-btn").trigger("click");
+                        }
+
+
+                        var vall = "option2";
+                        if (data.result.arg12.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=walking]").length; i++) {
+                            if ($($("input[name=walking]")[i]).val() == vall) {
+                                $($("input[name=walking]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg12.res == "No") {
+                            for (var j = 0; j < $("input[name=walking-modal]").length; j++) {
+                                var box = $("input[name=walking-modal]")[j];
+                                if (data.result.arg12.text == $(box).val()) {
+                                    $(box).attr('checked', true);
+                                }
+                            }
+                            $("#walking-btn").trigger("click");
+                        }
+
+
+                        var vall = "option2";
+                        if (data.result.arg13.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=activity]").length; i++) {
+                            if ($($("input[name=activity]")[i]).val() == vall) {
+                                $($("input[name=activity]")[i]).attr('checked', true);
+                            }
+                        }
+
+                        for (var i = 0; i < $("input[name=checks-modal]").length; i++) {
+                            var box = $("input[name=checks-modal]")[i];
+                            for (var j = 0 ; j < data.result.arg14.res.length; j++) {
+                                if ($(box).val() == data.result.arg14.res[j]) {
+                                    $(box).attr('checked', true);
+                                }
+                            }
+                        }
+                        $("#checks-btn").trigger("click");
+
+                        $("#arg14").val(data.result.arg15.res);
+
+
+                        for (var i = 0; i < $("input[name=goals]").length; i++) {
+                            if ($($("input[name=goals]")[i]).val() == data.result.arg16.res) {
+                                $($("input[name=goals]")[i]).attr('checked', true);
+                            }
+                        }
+
+                        for (var i = 0; i < $("input[name=grade]").length; i++) {
+                            if ($($("input[name=grade]")[i]).val() == data.result.arg17.res) {
+                                $($("input[name=grade]")[i]).attr('checked', true);
+                            }
+                        }
+
+                        for (var i = 0; i < $("input[name=will]").length; i++) {
+                            if ($($("input[name=will]")[i]).val() == data.result.arg18.res) {
+                                $($("input[name=will]")[i]).attr('checked', true);
+                            }
+                        }
+
+
+                        for (var i = 0; i < $("input[name=possible]").length; i++) {
+                            if ($($("input[name=possible]")[i]).val() == data.result.arg19.res) {
+                                $($("input[name=possible]")[i]).attr('checked', true);
+                            }
+                        }
+
+                        $("#notes").val(data.result.arg20);
+
+
+
+
+                    });
+                    /*******************************************/
 
                     $("#add-btn").click(function () {
                         var str = "";
                         var res = {};
-                        res.patientId = QueryString.pid;
+                        res.objectId = QueryString.rid;
 
                         for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
                             var box = $("input[name=reports-modal]:checked")[i];
@@ -171,16 +309,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         res.arg8 = $("#arg8").val();
                         res.arg9 = $("#arg9").val();
 
-                        var arrr=[];
+                        var arrr = [];
                         for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
                             var box = $("input[name=ranges-modal]:checked")[i];
                             arrr.push({
-                                key:  (box).value,
+                                key: (box).value,
                                 value: $(box).parent().siblings()[0].value
                             });
                         }
                         res.arg10 = { res: ($("input[name=ranges]:checked").val() == "option1") ? ("Yes") : ("No"), arr: arrr };
-      
+
                         str = $("#muscles-text").val();
                         res.arg11 = { res: ($("input[name=muscles]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
 
@@ -190,10 +328,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                         res.arg13 = { res: ($("input[name=activity]:checked").val() == "option1") ? ("Yes") : ("No") };
 
-                        arrr=[];
+                        arrr = [];
                         for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
                             var box = $("input[name=checks-modal]:checked")[i];
-                            arrr.push ((box).value);
+                            arrr.push((box).value);
                         }
                         res.arg14 = { res: arrr };
                         res.arg15 = { res: $("#arg14").val() };
@@ -210,11 +348,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
                                 'X-Parse-Session-Token': $.cookie("sessionClinic")
                             },
-                            url: "https://api.parse.com/1/functions/AddReport",
-                            data:JSON.stringify(res),
+                            url: "https://api.parse.com/1/functions/EditReport",
+                            data: JSON.stringify(res),
                             contentType: "application/json"
                         }).success(function (data) {
-                            console.dir(data);
+                            window.location.href = "./patient.html?pid="+data.result;
                         });
 
                     });
@@ -753,7 +891,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <div class="radio">
                                 <label><input type="checkbox" name="checks-modal" value="Active movement of the cervical spine"><span>Active movement of the cervical spine</span></label>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -1207,7 +1345,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <!---->
         <div class="col-xs-12">
-            <input type="button" id="add-btn" class="btn btn-piramry mine" value="הוספה" />
+            <input type="button" id="add-btn" class="btn btn-piramry mine" value="שמור" />
         </div>
         <div class="clearfix"> </div>
         <p class="footer-class">Copyright © 2015 ClinicManagment </p>
