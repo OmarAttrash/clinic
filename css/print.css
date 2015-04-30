@@ -1,0 +1,94 @@
+﻿body {
+      direction: rtl;
+      font-size:11px;
+}
+.search {
+    height:100px!important;
+}
+input[type=submit],input[type=text],textarea, input[type=button] {
+    display:none;
+}
+textarea {
+      display:none!important;
+}
+.history .print {
+    height:100px!important;
+}
+.future .print{
+    height:32px;
+}
+.print {
+    padding:3px;
+    
+}
+.sub.report-element .row,.main.report-element .row{
+    border:1px groove #111;   
+}
+
+.patient-info {
+    border:1px solid #111;
+    height:50px;
+}
+.patient-info li {
+    float:right;
+    margin:0 10px;
+    list-style:none;
+}
+
+.clearfix{
+      display:none;
+
+}
+.col-md-3 {
+    width:25%;
+    float:left;
+}
+.col-md-9 {
+    width:75%;
+     float:left;
+}
+h3 {
+    font-size:16px;
+    font-weight:800;
+}
+h4 {
+    font-size:14px;
+    font-weight:800;
+}
+#reports-res {
+      font-weight:800;
+}
+
+.side-report .row {
+    float:left!important;
+    width:18%;
+    border:1px dashed #111;
+    margin:5px;
+    padding:0 5px;
+    min-height:180px;
+    margin-bottom:20px;
+}
+.side-report .row .radio{
+    width:100px;
+}
+
+.footer-class {
+    display:none;
+}
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+    @page 
+        {
+            size: auto;   /* auto is the current printer page size */
+            margin: 0mm;  /* this affects the margin in the printer settings */
+        }
+
+        body 
+        {
+            background-color:#FFFFFF; 
+            height:100%;
+            margin: 0px;  /* the margin on the content before printing */
+            padding:20px;
+       }

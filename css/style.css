@@ -10,6 +10,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 .patient-info ul{
     
 }
+.print {
+    display:none;
+}
 
 .patient-info li{
     float: right;  
@@ -798,6 +801,7 @@ h5.sit {
 }
 }
 @media(max-width:1024px){
+
 .col-grid p {
   font-size: 1em;
 }
@@ -881,6 +885,9 @@ h5.sit {
 }
 }
 @media(max-width:768px){
+        .patient-info {
+        height:220px!important;
+    }
 .top-col,.audio-at {
   padding: 0;
 }

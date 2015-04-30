@@ -63,7 +63,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     url: "https://api.parse.com/1/functions/test",
                     contentType: "application/json"
                 }).success(function (data) {
-
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                            'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                            'X-Parse-Session-Token': $.cookie("sessionClinic")
+                        },
+                        data: JSON.stringify({ id: QueryString.pid }),
+                        url: "https://api.parse.com/1/functions/GetPatient",
+                        contentType: "application/json"
+                    }).success(function (data) {
+                        var str = "";
+                        str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
+                        str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
+                        str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
+                        str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
+                        str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
+                        str += '<li><span>רופה מפנה:</span>' + data.result[0].doctor + '</li>';
+                        str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
+                        $(".patient-info").html(str);
+                    }).error(function (error) {
+                        alert(JSON.parse(error.responseText).error);
+                    });
                     /*-------------walking--------------------------*/
                     $("input[name=walking]:radio").change(function () {
                         if (this.value == "option2") {
@@ -214,7 +236,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             data:JSON.stringify(res),
                             contentType: "application/json"
                         }).success(function (data) {
-                            console.dir(data);
+                            window.location.href = "./patient.html?pid="+QueryString.pid;
                         });
 
                     });
@@ -979,10 +1001,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="header" style="padding-top:5px;">
         <div class="col-top">
             <div class="search" style="height:200px;">
-                <div class="col-md-3">
-                    Date
-                </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <h3>פרטי המטופל</h3>
                     <ul class="patient-info">
                         <li><span>מספר חולה:</span>xxxxx</li>

@@ -103,7 +103,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         var str = "";
                         data.result.forEach(function (report) {
                             console.dir(report);
-                            str += '<a href="reporte.html?rid=' + report.objectId + '"><div class="event-top"><div><ul class="report-info">';
+                            str += '<a href="reporte.html?rid=' + report.objectId + '&pid='+QueryString.pid+'"><div class="event-top"><div><ul class="report-info">';
                             str += '<li><span>אבחנה:</span>' + report.arg0 + '</li>';
                             str += '<li><span>תאריך הפקה:</span>' + report.updatedAt + '</li>';
                             str += '</ul></div><div class="clearfix"> </div></div></a>';

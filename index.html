@@ -23,6 +23,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--//fonts-->
  <script>
      $(document).ready(function () {
+         if ($.cookie("sessionClinic") != null) {
+             window.location.href = "./search.html";
+         }
          $("#login").click(function () {
              $.ajax({
                  type: 'GET',
