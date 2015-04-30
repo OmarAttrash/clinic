@@ -108,9 +108,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             str += '<li><span>תאריך הפקה:</span>' + report.updatedAt + '</li>';
                             str += '</ul></div><div class="clearfix"> </div></div></a>';
                         });
-                        $("#reports").append(str);
+                        $("#reports").html(str);
+
+
+
+                        $("#reports-search-btn").click(function () {
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                },
+                                data: JSON.stringify({ patientId: QueryString.pid, title: $("#search-input").val() }),
+                                url: "https://api.parse.com/1/functions/SearchReport",
+                                contentType: "application/json"
+                            }).success(function (data) {
+                                var str = "";
+                                data.result.forEach(function (report) {
+                                    console.dir(report);
+                                    str += '<a href="reporte.html?rid=' + report.objectId + '&pid=' + QueryString.pid + '"><div class="event-top"><div><ul class="report-info">';
+                                    str += '<li><span>אבחנה:</span>' + report.arg0 + '</li>';
+                                    str += '<li><span>תאריך הפקה:</span>' + report.updatedAt + '</li>';
+                                    str += '</ul></div><div class="clearfix"> </div></div></a>';
+                                });
+                                $("#reports").html(str);
+
+                            });
+                        });
 
                     }).error(function (error) {
+                        window.location.href = "./search.html";
                        // alert(JSON.parse(error.responseText).error);
                     });
 
@@ -168,8 +196,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="search">
                 <div class="search-in">
                     <form>
-                        <input type="text" value="טיפול" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'טיפול';}">
-                        <input type="submit" value="חיפוש">
+                        <input type="text" id="search-input" value="טיפול" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'טיפול';}">
+                        <input type="submit" id="reports-search-btn" value="חיפוש">
                     </form>
                 </div>
             </div>

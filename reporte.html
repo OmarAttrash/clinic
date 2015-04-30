@@ -170,252 +170,322 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
                                 'X-Parse-Session-Token': $.cookie("sessionClinic")
                             },
-                            data: JSON.stringify({ id: QueryString.pid }),
-                            url: "https://api.parse.com/1/functions/GetPatient",
+                            url: "https://api.parse.com/1/functions/GetHistories",
+                            data: JSON.stringify({ reportId: QueryString.rid }),
                             contentType: "application/json"
                         }).success(function (data) {
-                            var str = "";
-                            str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
-                            str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
-                            str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
-                            str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
-                            str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
-                            str += '<li><span>רופה מפנה:</span>' + data.result[0].doctor + '</li>';
-                            str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
-                            $(".patient-info").html(str);
-                        }).error(function (error) {
-                            alert(JSON.parse(error.responseText).error);
-                        });
-                        for (var i = 0; i < $("input[name=reports-modal]").length; i++) {
-                            var box = $("input[name=reports-modal]")[i];
-                            if (box.value == data.result.arg0) {
-                                $(box).attr('checked', true);
-                            }
-                        }
-                        $("#reports-btn").trigger("click");
-                        $("#arg1").val(data.result.arg1);
-                        $("#arg2").val(data.result.arg2);
-                        $("#arg3").val(data.result.arg3);
-                        $("#arg4").val(data.result.arg4);
-                        $("#arg5").val(data.result.arg5);
-                        $("#arg6").val(data.result.arg6);
-                        $("#arg7").val(data.result.arg7);
-                        $("#arg8").val(data.result.arg8);
-                        $("#arg9").val(data.result.arg9);
+                            var str ="";
+                            str+="<div class='col-xs-12 visits'>";
+                            str += "<div class='col-xs-4'>תריך</div>";
+                            str += "<div class='col-xs-4'>סוג הטיפול</div>";
+                            str += "<div class='col-xs-4'>הערות</div></div>";
+                           
 
-                        var vall = "option2";
-                        if (data.result.arg10.res == "Yes") {
-                            vall = "option1";
-                        }
-                        for (var i = 0; i < $("input[name=ranges]").length; i++) {
-                            if ($($("input[name=ranges]")[i]).val() == vall) {
-                                $($("input[name=ranges]")[i]).attr('checked', true);
+                            //visits-res
+                            for (var i = 0; i < data.result.length; i++) {
+                                str += '<div class="col-xs-12 visits">';
+                                str += '<div class="col-xs-4">' + (data.result[i].arg0||"*****") + '</div>';
+                                str += '<div class="col-xs-4">' + (data.result[i].arg1||"*****") + '</div>';
+                                str += '<div class="col-xs-4">' + (data.result[i].arg2||"*****") + '</div></div>';
+                           
                             }
-                        }
-                        if (data.result.arg10.res == "No") {
-                            for (var i = 0; i < data.result.arg10.arr.length; i++) {
-                                for (var j = 0; j < $("input[name=ranges-modal]").length; j++) {
-                                    var box = $("input[name=ranges-modal]")[j];
-                                    if ($(box).val() == data.result.arg10.arr[i].key) {
+                            $("#visits-res").html(str);
+                        });
+                        $("#visit-btn").click(function () {
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                },
+                                url: "https://api.parse.com/1/functions/AddVisit",
+                                data: JSON.stringify({ reportId: QueryString.rid, arg0: $("#v0").val(), arg1: $("#v1").val(), arg2: $("#v2").val() }),
+                                contentType: "application/json"
+                            }).success(function (data) {
+                                $.ajax({
+                                    type: 'POST',
+                                    headers: {
+                                        'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                        'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                        'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                    },
+                                    url: "https://api.parse.com/1/functions/GetHistories",
+                                    data: JSON.stringify({ reportId: QueryString.rid }),
+                                    contentType: "application/json"
+                                }).success(function (data) {
+                                    var str = "";
+                                    str += "<div class='col-xs-12 visits'>";
+                                    str += "<div class='col-xs-4'>תריך</div>";
+                                    str += "<div class='col-xs-4'>סוג הטיפול</div>";
+                                    str += "<div class='col-xs-4'>הערות</div></div>";
+
+
+                                    //visits-res
+                                    for (var i = 0; i < data.result.length; i++) {
+                                        str += '<div class="col-xs-12 visits">';
+                                        str += '<div class="col-xs-4">' + (data.result[i].arg0 || "*****") + '</div>';
+                                        str += '<div class="col-xs-4">' + (data.result[i].arg1 || "*****") + '</div>';
+                                        str += '<div class="col-xs-4">' + (data.result[i].arg2 || "*****") + '</div></div>';
+
+                                    }
+                                    $("#visits-res").html(str);
+                                });
+                            });
+                        });
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                },
+                                data: JSON.stringify({ id: QueryString.pid }),
+                                url: "https://api.parse.com/1/functions/GetPatient",
+                                contentType: "application/json"
+                            }).success(function (data) {
+                                var str = "";
+                                str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
+                                str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
+                                str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
+                                str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
+                                str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
+                                str += '<li><span>רופה מפנה:</span>' + data.result[0].doctor + '</li>';
+                                str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
+                                $(".patient-info").html(str);
+                            }).error(function (error) {
+                                alert(JSON.parse(error.responseText).error);
+                            });
+                            for (var i = 0; i < $("input[name=reports-modal]").length; i++) {
+                                var box = $("input[name=reports-modal]")[i];
+                                if (box.value == data.result.arg0) {
+                                    $(box).attr('checked', true);
+                                }
+                            }
+                            $("#reports-btn").trigger("click");
+                            $("#arg1").val(data.result.arg1);
+                            $("#arg2").val(data.result.arg2);
+                            $("#arg3").val(data.result.arg3);
+                            $("#arg4").val(data.result.arg4);
+                            $("#arg5").val(data.result.arg5);
+                            $("#arg6").val(data.result.arg6);
+                            $("#arg7").val(data.result.arg7);
+                            $("#arg8").val(data.result.arg8);
+                            $("#arg9").val(data.result.arg9);
+
+                            var vall = "option2";
+                            if (data.result.arg10.res == "Yes") {
+                                vall = "option1";
+                            }
+                            for (var i = 0; i < $("input[name=ranges]").length; i++) {
+                                if ($($("input[name=ranges]")[i]).val() == vall) {
+                                    $($("input[name=ranges]")[i]).attr('checked', true);
+                                }
+                            }
+                            if (data.result.arg10.res == "No") {
+                                for (var i = 0; i < data.result.arg10.arr.length; i++) {
+                                    for (var j = 0; j < $("input[name=ranges-modal]").length; j++) {
+                                        var box = $("input[name=ranges-modal]")[j];
+                                        if ($(box).val() == data.result.arg10.arr[i].key) {
+                                            $(box).attr('checked', true);
+                                            $($(box).parent().siblings()[0]).val(data.result.arg10.arr[i].value);
+                                        }
+                                    }
+                                }
+                                $("#ranges-btn").trigger("click");
+                            }
+
+                            var vall = "option2";
+                            if (data.result.arg11.res == "Yes") {
+                                vall = "option1";
+                            }
+                            for (var i = 0; i < $("input[name=muscles]").length; i++) {
+                                if ($($("input[name=muscles]")[i]).val() == vall) {
+                                    $($("input[name=muscles]")[i]).attr('checked', true);
+                                }
+                            }
+                            if (data.result.arg11.res == "No") {
+                                $("#muscles-text").val(data.result.arg11.text);
+                                $("#muscles-btn").trigger("click");
+                            }
+
+
+                            var vall = "option2";
+                            if (data.result.arg12.res == "Yes") {
+                                vall = "option1";
+                            }
+                            for (var i = 0; i < $("input[name=walking]").length; i++) {
+                                if ($($("input[name=walking]")[i]).val() == vall) {
+                                    $($("input[name=walking]")[i]).attr('checked', true);
+                                }
+                            }
+                            if (data.result.arg12.res == "No") {
+                                for (var j = 0; j < $("input[name=walking-modal]").length; j++) {
+                                    var box = $("input[name=walking-modal]")[j];
+                                    if (data.result.arg12.text == $(box).val()) {
                                         $(box).attr('checked', true);
-                                        $($(box).parent().siblings()[0]).val(data.result.arg10.arr[i].value);
+                                    }
+                                }
+                                $("#walking-btn").trigger("click");
+                            }
+
+
+                            var vall = "option2";
+                            if (data.result.arg13.res == "Yes") {
+                                vall = "option1";
+                            }
+                            for (var i = 0; i < $("input[name=activity]").length; i++) {
+                                if ($($("input[name=activity]")[i]).val() == vall) {
+                                    $($("input[name=activity]")[i]).attr('checked', true);
+                                }
+                            }
+
+                            for (var i = 0; i < $("input[name=checks-modal]").length; i++) {
+                                var box = $("input[name=checks-modal]")[i];
+                                for (var j = 0 ; j < data.result.arg14.res.length; j++) {
+                                    if ($(box).val() == data.result.arg14.res[j]) {
+                                        $(box).attr('checked', true);
                                     }
                                 }
                             }
-                            $("#ranges-btn").trigger("click");
-                        }
+                            $("#checks-btn").trigger("click");
 
-                        var vall = "option2";
-                        if (data.result.arg11.res == "Yes") {
-                            vall = "option1";
-                        }
-                        for (var i = 0; i < $("input[name=muscles]").length; i++) {
-                            if ($($("input[name=muscles]")[i]).val() == vall) {
-                                $($("input[name=muscles]")[i]).attr('checked', true);
-                            }
-                        }
-                        if (data.result.arg11.res == "No") {
-                            $("#muscles-text").val(data.result.arg11.text);
-                            $("#muscles-btn").trigger("click");
-                        }
+                            $("#arg14").val(data.result.arg15.res);
 
 
-                        var vall = "option2";
-                        if (data.result.arg12.res == "Yes") {
-                            vall = "option1";
-                        }
-                        for (var i = 0; i < $("input[name=walking]").length; i++) {
-                            if ($($("input[name=walking]")[i]).val() == vall) {
-                                $($("input[name=walking]")[i]).attr('checked', true);
-                            }
-                        }
-                        if (data.result.arg12.res == "No") {
-                            for (var j = 0; j < $("input[name=walking-modal]").length; j++) {
-                                var box = $("input[name=walking-modal]")[j];
-                                if (data.result.arg12.text == $(box).val()) {
-                                    $(box).attr('checked', true);
+                            for (var i = 0; i < $("input[name=goals]").length; i++) {
+                                if ($($("input[name=goals]")[i]).val() == data.result.arg16.res) {
+                                    $($("input[name=goals]")[i]).attr('checked', true);
                                 }
                             }
-                            $("#walking-btn").trigger("click");
-                        }
 
-
-                        var vall = "option2";
-                        if (data.result.arg13.res == "Yes") {
-                            vall = "option1";
-                        }
-                        for (var i = 0; i < $("input[name=activity]").length; i++) {
-                            if ($($("input[name=activity]")[i]).val() == vall) {
-                                $($("input[name=activity]")[i]).attr('checked', true);
-                            }
-                        }
-
-                        for (var i = 0; i < $("input[name=checks-modal]").length; i++) {
-                            var box = $("input[name=checks-modal]")[i];
-                            for (var j = 0 ; j < data.result.arg14.res.length; j++) {
-                                if ($(box).val() == data.result.arg14.res[j]) {
-                                    $(box).attr('checked', true);
+                            for (var i = 0; i < $("input[name=grade]").length; i++) {
+                                if ($($("input[name=grade]")[i]).val() == data.result.arg17.res) {
+                                    $($("input[name=grade]")[i]).attr('checked', true);
                                 }
                             }
-                        }
-                        $("#checks-btn").trigger("click");
 
-                        $("#arg14").val(data.result.arg15.res);
-
-
-                        for (var i = 0; i < $("input[name=goals]").length; i++) {
-                            if ($($("input[name=goals]")[i]).val() == data.result.arg16.res) {
-                                $($("input[name=goals]")[i]).attr('checked', true);
+                            for (var i = 0; i < $("input[name=will]").length; i++) {
+                                if ($($("input[name=will]")[i]).val() == data.result.arg18.res) {
+                                    $($("input[name=will]")[i]).attr('checked', true);
+                                }
                             }
-                        }
 
-                        for (var i = 0; i < $("input[name=grade]").length; i++) {
-                            if ($($("input[name=grade]")[i]).val() == data.result.arg17.res) {
-                                $($("input[name=grade]")[i]).attr('checked', true);
+
+                            for (var i = 0; i < $("input[name=possible]").length; i++) {
+                                if ($($("input[name=possible]")[i]).val() == data.result.arg19.res) {
+                                    $($("input[name=possible]")[i]).attr('checked', true);
+                                }
                             }
-                        }
 
-                        for (var i = 0; i < $("input[name=will]").length; i++) {
-                            if ($($("input[name=will]")[i]).val() == data.result.arg18.res) {
-                                $($("input[name=will]")[i]).attr('checked', true);
-                            }
-                        }
+                            $("#notes").val(data.result.arg20);
 
 
-                        for (var i = 0; i < $("input[name=possible]").length; i++) {
-                            if ($($("input[name=possible]")[i]).val() == data.result.arg19.res) {
-                                $($("input[name=possible]")[i]).attr('checked', true);
-                            }
-                        }
-
-                        $("#notes").val(data.result.arg20);
-
-
-                        $(".event-at input[type=text],.event-at textarea").each(function () {
-                            $(this).parent().append('<div class="col-md-9 print">' + $(this).val() + '</div>');
-                        });
-
-                    });
-                    /*******************************************/
-                    $("#print-btn").click(function () {
-                        window.print();
-                    });
-                    $("#remove-btn").click(function () {
-                        $.ajax({
-                            type: 'POST',
-                            headers: {
-                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
-                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                                'X-Parse-Session-Token': $.cookie("sessionClinic")
-                            },
-                            url: "https://api.parse.com/1/functions/RemoveReport",
-                            data: JSON.stringify({ objectId: QueryString.rid }),
-                            contentType: "application/json"
-                        }).success(function (data) {
-                            window.location.href = "./patient.html?pid=" + QueryString.result;
-                        }).error(function () {
-                            alert("Erorr!");
-                            location.reload();
-                        });
-                    });
-                    $("#add-btn").click(function () {
-                        var str = "";
-                        var res = {};
-                        res.objectId = QueryString.rid;
-
-                        for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
-                            var box = $("input[name=reports-modal]:checked")[i];
-                            str += (box).value;
-                        }
-                        res.arg0 = str;
-                        res.arg1 = $("#arg1").val();
-                        res.arg2 = $("#arg2").val();
-                        res.arg3 = $("#arg3").val();
-                        res.arg4 = $("#arg4").val();
-                        res.arg5 = $("#arg5").val();
-                        res.arg6 = $("#arg6").val();
-                        res.arg7 = $("#arg7").val();
-                        res.arg8 = $("#arg8").val();
-                        res.arg9 = $("#arg9").val();
-
-                        var arrr = [];
-                        for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
-                            var box = $("input[name=ranges-modal]:checked")[i];
-                            arrr.push({
-                                key: (box).value,
-                                value: $(box).parent().siblings()[0].value
+                            $(".event-at input[type=text],.event-at textarea").each(function () {
+                                $(this).parent().append('<div class="col-md-9 print">' + $(this).val() + '</div>');
                             });
-                        }
-                        res.arg10 = { res: ($("input[name=ranges]:checked").val() == "option1") ? ("Yes") : ("No"), arr: arrr };
 
-                        str = $("#muscles-text").val();
-                        res.arg11 = { res: ($("input[name=muscles]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
+                        });
+                        /*******************************************/
+                        $("#print-btn").click(function () {
+                            window.print();
+                        });
+                        $("#remove-btn").click(function () {
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                },
+                                url: "https://api.parse.com/1/functions/RemoveReport",
+                                data: JSON.stringify({ objectId: QueryString.rid }),
+                                contentType: "application/json"
+                            }).success(function (data) {
+                                window.location.href = "./patient.html?pid=" + QueryString.pid;
+                            }).error(function () {
+                                alert("Erorr!");
+                                location.reload();
+                            });
+                        });
+                        $("#add-btn").click(function () {
+                            var str = "";
+                            var res = {};
+                            res.objectId = QueryString.rid;
 
-                        str = $("input[name=walking-modal]:checked").val();
-                        res.arg12 = { res: ($("input[name=walking]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
+                            for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
+                                var box = $("input[name=reports-modal]:checked")[i];
+                                str += (box).value;
+                            }
+                            res.arg0 = str;
+                            res.arg1 = $("#arg1").val();
+                            res.arg2 = $("#arg2").val();
+                            res.arg3 = $("#arg3").val();
+                            res.arg4 = $("#arg4").val();
+                            res.arg5 = $("#arg5").val();
+                            res.arg6 = $("#arg6").val();
+                            res.arg7 = $("#arg7").val();
+                            res.arg8 = $("#arg8").val();
+                            res.arg9 = $("#arg9").val();
+
+                            var arrr = [];
+                            for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
+                                var box = $("input[name=ranges-modal]:checked")[i];
+                                arrr.push({
+                                    key: (box).value,
+                                    value: $(box).parent().siblings()[0].value
+                                });
+                            }
+                            res.arg10 = { res: ($("input[name=ranges]:checked").val() == "option1") ? ("Yes") : ("No"), arr: arrr };
+
+                            str = $("#muscles-text").val();
+                            res.arg11 = { res: ($("input[name=muscles]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
+
+                            str = $("input[name=walking-modal]:checked").val();
+                            res.arg12 = { res: ($("input[name=walking]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
 
 
-                        res.arg13 = { res: ($("input[name=activity]:checked").val() == "option1") ? ("Yes") : ("No") };
+                            res.arg13 = { res: ($("input[name=activity]:checked").val() == "option1") ? ("Yes") : ("No") };
 
-                        arrr = [];
-                        for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
-                            var box = $("input[name=checks-modal]:checked")[i];
-                            arrr.push((box).value);
-                        }
-                        res.arg14 = { res: arrr };
-                        res.arg15 = { res: $("#arg14").val() };
-                        res.arg16 = { res: $("input[name=goals]:checked").val() };
-                        res.arg17 = { res: $("input[name=grade]:checked").val() };
-                        res.arg18 = { res: $("input[name=will]:checked").val() };
-                        res.arg19 = { res: $("input[name=possible]:checked").val() };
-                        res.arg20 = $("#notes").val();
+                            arrr = [];
+                            for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
+                                var box = $("input[name=checks-modal]:checked")[i];
+                                arrr.push((box).value);
+                            }
+                            res.arg14 = { res: arrr };
+                            res.arg15 = { res: $("#arg14").val() };
+                            res.arg16 = { res: $("input[name=goals]:checked").val() };
+                            res.arg17 = { res: $("input[name=grade]:checked").val() };
+                            res.arg18 = { res: $("input[name=will]:checked").val() };
+                            res.arg19 = { res: $("input[name=possible]:checked").val() };
+                            res.arg20 = $("#notes").val();
 
-                        $.ajax({
-                            type: 'POST',
-                            headers: {
-                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
-                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                                'X-Parse-Session-Token': $.cookie("sessionClinic")
-                            },
-                            url: "https://api.parse.com/1/functions/EditReport",
-                            data: JSON.stringify(res),
-                            contentType: "application/json"
-                        }).success(function (data) {
-                            window.location.href = "./patient.html?pid=" + data.result;
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                },
+                                url: "https://api.parse.com/1/functions/EditReport",
+                                data: JSON.stringify(res),
+                                contentType: "application/json"
+                            }).success(function (data) {
+                                window.location.href = "./patient.html?pid=" + data.result;
+                            });
+
                         });
 
-                    });
+                    }).error(function (e) {
+                        $.removeCookie('sessionClinic');
+                        window.location.href = "./index.html";
 
-                }).error(function (e) {
-                    $.removeCookie('sessionClinic');
-                    window.location.href = "./index.html";
+                    });
+                }
+
+
 
                 });
-            }
-
-
-
-        });
 
 
 
@@ -1139,7 +1209,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     </div>
     <!-- ||||||||||||||||||||||||||---ranges-modal/end--- ||||||||||||||||||||||||||||||||||| -->
-
+    <!-- ||||||||||||||||||||||||||---visits-modal--- ||||||||||||||||||||||||||||||||||| -->
+    <div class="modal fade" id="visits-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Visits</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3" style="float:right;line-height:34px;">תריך</div>
+                        <div class="col-md-9"><input id="v0" type="text" class="form-control" /></div>
+                        <div class="col-md-3" style="float:right;line-height:34px;">סוג טיפול</div>
+                        <div class="col-md-9"><input id="v1" type="text" class="form-control" /></div>
+                        <div class="col-md-3" style="float:right;line-height:34px;">הערות</div>
+                        <div class="col-md-9"><input id="v2" type="text" class="form-control" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="visit-btn" data-dismiss="modal">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav class="navbar .navbar-fixed-top navbar-default">
         <div class="container-fluid">
@@ -1165,7 +1257,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <div class="header" style="padding-top:5px;">
         <div class="col-top">
-            <div class="search" style="height:200px;">
+            <div class="search" >
 
                 <div class="col-md-12">
                     <h3>פרטי המטופל</h3>
@@ -1181,226 +1273,253 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </div>
             </div>
             <div class="clearfix"> </div>
-            <div class="col-md-12 event-at">
-                <div class="col-xs-12 col-md-8" style="float:right;">
-                    <div class="main report-element">
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">אבחנה:</div>
-                            <div class="res" id="reports-res"></div>
-                            <div class="col-md-9"><input type="submit" value="עדכן" id="update-reports" class="form-control" /></div>
-                        </div>
-                        <div class="row history">
-                            <div class="col-md-3" style="float:right;">הסטוריה:</div>
-                            <div class="col-md-9"> <textarea id="arg1" class="form-control" rows="7"></textarea></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">מיקום ו אופי הבעיה:</div>
-                            <div class="col-md-9"> <input type="text" id="arg2" class="form-control" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;"> תדירות הסימפטומים:</div>
-                            <div class="col-md-9"> <input type="text" id="arg3" class="form-control" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמגבירות סימפטומים:</div>
-                            <div class="col-md-9"> <input type="text" id="arg4" class="form-control" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמקלות סימפטומים:</div>
-                            <div class="col-md-9"> <input type="text" id="arg5" class="form-control" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;"> התנהגות סימפטומים במהלך היום:</div>
-                            <div class="col-md-9"> <input type="text" id="arg6" class="form-control" /></div>
-                        </div>
-                        <div class="row future">
-                            <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח ארוך:</div>
-                            <div class="col-md-9"> <textarea class="form-control" id="arg7" rows="2"></textarea></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח קצר:</div>
-                            <div class="col-md-9"> <input type="text" id="arg8" class="form-control" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">תוכנית הטיפול:</div>
-                            <div class="col-md-9"> <input type="text" id="arg9" class="form-control" /></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-4" style="float:right;">
-                    <div class="side-report report-element">
-                        <div class="row">
-                            <h4>טווחים</h4>
-                            <div class="radio">
-                                <label><input type="radio" name="ranges" value="option1" checked>מלא</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="ranges" value="option2">
-                                    חסר
-                                </label>
-                            </div>
-                            <div class="res" id="ranges-res"></div>
-                            <div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h4>כח שרירים</h4>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="muscles" value="option1" checked>
-                                    מלא
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="muscles" value="option2">
-                                    חסר
-                                </label>
-                            </div>
-                            <div class="res" id="muscles-res"></div>
-                        </div>
-                        <div class="row">
-                            <h4>הליכה עצמית</h4>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="walking" value="option1" checked>
-                                    כן
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="walking" value="option2">
-                                    לא
-                                </label>
-                            </div>
-                            <div class="res" id="walking-res"></div>
-                        </div>
-                        <div class="row">
-                            <h4>פעילות גופנית</h4>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="activity" value="option1" checked>
-                                    כן
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="activity" value="option2">
-                                    לא
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h4>בדיקות אחירות</h4>
-                            <div class="res" id="checks-res"></div>
-                            <div class="col-md-9"> <input type="submit" id="update-checks" class="form-control" value="עדכן"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-xs-12 col-md-12" style="float:right;">
-                    <div class="sub report-element">
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">סיכום:</div>
-                            <div class="col-md-9"> <textarea id="arg14" class="form-control" rows="6"></textarea></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">המטרות הושגו האופן:</div>
-                            <div class="col-md-9">
-                                <label>
-                                    <input type="radio" name="goals" value="חלקי" checked>
-                                    חלקי
-                                </label>
-                                <label>
-                                    <input type="radio" name="goals" value="מלא">
-                                    מלא
-                                </label>
-                                <label>
-                                    <input type="radio" name="goals" value="לא ידוע">
-                                    לא ידוע
-                                </label>
+            <div role="tabpanel">
+
+                <!-- Nav tabs -->
+                <ul id="taps" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                    <li role="presentation"><a href="#visits" aria-controls="visits" role="tab" data-toggle="tab">visits</a></li>
+                </ul>
+                <div class="clearfix"> </div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active fade in " id="home">
+                        <div class="col-md-12 event-at">
+                            <div class="col-xs-12 col-md-8" style="float:right;">
+                                <div class="main report-element">
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">אבחנה:</div>
+                                        <div class="res" id="reports-res"></div>
+                                        <div class="col-md-9"><input type="submit" value="עדכן" id="update-reports" class="form-control" /></div>
+                                    </div>
+                                    <div class="row history">
+                                        <div class="col-md-3" style="float:right;">הסטוריה:</div>
+                                        <div class="col-md-9"> <textarea id="arg1" class="form-control" rows="7"></textarea></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">מיקום ו אופי הבעיה:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg2" class="form-control" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;"> תדירות הסימפטומים:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg3" class="form-control" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמגבירות סימפטומים:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg4" class="form-control" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;"> פעולות ותנוחות שמקלות סימפטומים:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg5" class="form-control" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;"> התנהגות סימפטומים במהלך היום:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg6" class="form-control" /></div>
+                                    </div>
+                                    <div class="row future">
+                                        <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח ארוך:</div>
+                                        <div class="col-md-9"> <textarea class="form-control" id="arg7" rows="2"></textarea></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">מטרות הטיפול לטווח קצר:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg8" class="form-control" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">תוכנית הטיפול:</div>
+                                        <div class="col-md-9"> <input type="text" id="arg9" class="form-control" /></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">התמדה בתרגול עצמי:</div>
-                            <div class="col-md-9">
-                                <label>
-                                    <input type="radio" name="grade" value="מרובה" checked>
-                                    מרובה
-                                </label>
-                                <label>
-                                    <input type="radio" name="grade" value="בינונית">
-                                    בינונית
-                                </label>
-                                <label>
-                                    <input type="radio" name="grade" value="רלוונטי">
-                                    לא רלוונטי
-                                </label>
-                                <label>
-                                    <input type="radio" name="grade" value="מועטה">
-                                    מועטה
-                                </label>
+                            <div class="col-xs-12 col-md-4" style="float:right;">
+                                <div class="side-report report-element">
+                                    <div class="row">
+                                        <h4>טווחים</h4>
+                                        <div class="radio">
+                                            <label><input type="radio" name="ranges" value="option1" checked>מלא</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="ranges" value="option2">
+                                                חסר
+                                            </label>
+                                        </div>
+                                        <div class="res" id="ranges-res"></div>
+                                        <div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h4>כח שרירים</h4>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="muscles" value="option1" checked>
+                                                מלא
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="muscles" value="option2">
+                                                חסר
+                                            </label>
+                                        </div>
+                                        <div class="res" id="muscles-res"></div>
+                                    </div>
+                                    <div class="row">
+                                        <h4>הליכה עצמית</h4>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="walking" value="option1" checked>
+                                                כן
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="walking" value="option2">
+                                                לא
+                                            </label>
+                                        </div>
+                                        <div class="res" id="walking-res"></div>
+                                    </div>
+                                    <div class="row">
+                                        <h4>פעילות גופנית</h4>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="activity" value="option1" checked>
+                                                כן
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="activity" value="option2">
+                                                לא
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h4>בדיקות אחירות</h4>
+                                        <div class="res" id="checks-res"></div>
+                                        <div class="col-md-9"> <input type="submit" id="update-checks" class="form-control" value="עדכן"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">מידת שיתוף פעולה:</div>
-                            <div class="col-md-9">
-                                <label>
-                                    <input type="radio" name="will" value="חלקי" checked>
-                                    חלקי
-                                </label>
-                                <label>
-                                    <input type="radio" name="will" value="מלא">
-                                    מלא
-                                </label>
+
+                            <div class="col-xs-12 col-md-12" style="float:right;">
+                                <div class="sub report-element">
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">סיכום:</div>
+                                        <div class="col-md-9"> <textarea id="arg14" class="form-control" rows="6"></textarea></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">המטרות הושגו האופן:</div>
+                                        <div class="col-md-9">
+                                            <label>
+                                                <input type="radio" name="goals" value="חלקי" checked>
+                                                חלקי
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="goals" value="מלא">
+                                                מלא
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="goals" value="לא ידוע">
+                                                לא ידוע
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">התמדה בתרגול עצמי:</div>
+                                        <div class="col-md-9">
+                                            <label>
+                                                <input type="radio" name="grade" value="מרובה" checked>
+                                                מרובה
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="grade" value="בינונית">
+                                                בינונית
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="grade" value="רלוונטי">
+                                                לא רלוונטי
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="grade" value="מועטה">
+                                                מועטה
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">מידת שיתוף פעולה:</div>
+                                        <div class="col-md-9">
+                                            <label>
+                                                <input type="radio" name="will" value="חלקי" checked>
+                                                חלקי
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="will" value="מלא">
+                                                מלא
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">יכולת חזרה לפעילות:</div>
+                                        <div class="col-md-9">
+                                            <label>
+                                                <input type="radio" name="possible" value="חלקי" checked>
+                                                חלקי
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="possible" value="מלא">
+                                                מלא
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="possible" value="כן" checked>
+                                                כן
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="possible" value="לא">
+                                                לא
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="possible" value="לא רלוונטי">
+                                                לא רלוונטי
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="float:right;">הערות:</div>
+                                        <div class="col-md-9"> <textarea id="notes" class="form-control" rows="2"></textarea></div>
+                                    </div>
+                                </div>
                             </div>
+
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="button" id="remove-btn" class="btn  mine" style="background-color:red;" value="מחק" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="button" id="add-btn" class="btn btn-piramry mine" value="שמור" />
+                        </div>
+
+                        <div class="col-xs-3">
+                            <input type="button" id="print-btn" class="btn mine" value="הדפס" />
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="visits">
+                        <div class="row" id="visits-res">
+                           
                         </div>
                         <div class="row">
-                            <div class="col-md-3" style="float:right;">יכולת חזרה לפעילות:</div>
-                            <div class="col-md-9">
-                                <label>
-                                    <input type="radio" name="possible" value="חלקי" checked>
-                                    חלקי
-                                </label>
-                                <label>
-                                    <input type="radio" name="possible" value="מלא">
-                                    מלא
-                                </label>
-                                <label>
-                                    <input type="radio" name="possible" value="כן" checked>
-                                    כן
-                                </label>
-                                <label>
-                                    <input type="radio" name="possible" value="לא">
-                                    לא
-                                </label>
-                                <label>
-                                    <input type="radio" name="possible" value="לא רלוונטי">
-                                    לא רלוונטי
-                                </label>
-                            </div>
+                            <input type="button" class="col-md-12 btn" data-toggle="modal" data-target="#visits-modal" value="הוספה" id="add-visit-btn" />
                         </div>
-                        <div class="row">
-                            <div class="col-md-3" style="float:right;">הערות:</div>
-                            <div class="col-md-9"> <textarea id="notes" class="form-control" rows="2"></textarea></div>
-                        </div>
+
                     </div>
                 </div>
 
             </div>
+
         </div>
         <!---->
-        <div class="col-xs-3">
-            <input type="button" id="remove-btn" class="btn  mine" style="background-color:red;" value="מחק" />
-        </div>
-        <div class="col-xs-6">
-            <input type="button" id="add-btn" class="btn btn-piramry mine" value="שמור" />
-        </div>
 
-        <div class="col-xs-3">
-            <input type="button" id="print-btn" class="btn mine" value="הדפס" />
-        </div>
 
         <div class="clearfix"> </div>
         <p class="footer-class">Copyright © 2015 ClinicManagment </p>

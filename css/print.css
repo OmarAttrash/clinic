@@ -21,6 +21,9 @@ textarea {
     padding:3px;
     
 }
+#taps {
+    display:none;
+}
 .sub.report-element .row,.main.report-element .row{
     border:1px groove #111;   
 }

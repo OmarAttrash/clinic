@@ -6,9 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
 
 /*______________________*/
-
+#taps {
+    margin-top:20px;
+}
 .patient-info ul{
     
+}
+.nav-tabs > li {
+    float:right!important;
 }
 .print {
     display:none;
@@ -270,6 +275,27 @@ p.ten{
 	color:#666;
 	margin: 0 0 0 12%;
 }
+#visits-res {
+    margin:10px;
+    box-shadow: 0 5px 5px -3px #aaa;
+     border-radius: 0 0 5px 5px;
+}
+.visits {
+    border-bottom:1px dashed #666;
+    background-color:#ddd;
+    color:#333;
+    line-height:34px;
+    height:34px;
+    padding:0 10px;
+}
+    .visits:first-child {
+        border-radius:5px 5px 0 0;
+        font-weight:700;
+    }
+    .visits:last-child {
+        border-radius: 0 0 5px 5px;
+         border-bottom:none;
+    }
 .your input[type="submit"]{
 	background: #5fabc7;
 	width: 100%;
