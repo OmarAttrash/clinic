@@ -19,6 +19,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="./css/print.css" rel="stylesheet" type="text/css" media="print" />
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -175,7 +176,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             contentType: "application/json"
                         }).success(function (data) {
                             var str ="";
-                            str+="<div class='col-xs-12 visits'>";
+                            str+="<div class='row visits'>";
                             str += "<div class='col-xs-3'>תריך</div>";
                             str += "<div class='col-xs-3'>סוג הטיפול</div>";
                             str += "<div class='col-xs-6'>הערות</div></div>";
@@ -183,12 +184,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                             //visits-res
                             for (var i = 0; i < data.result.length; i++) {
-                                str += '<div class="col-xs-12 visits">';
+                                str += '<div class="row visits">';
                                 str += '<input type="hidden" value="' + data.result[i].objectId + '"/>';
-                                str += '<div class="col-xs-3">' + (data.result[i].arg0 || "*****") + '</div>';
-                                str += '<div class="col-xs-3">' + (data.result[i].arg1 || "*****") + '</div>';
-                                str += '<div class="col-xs-5">' + (data.result[i].arg2 || "*****") + '</div>';
-                                str += '<div class="col-xs-1"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
+                                str += '<div class="col-sm-3 col-xs-4">' + (data.result[i].arg0 || "*****") + '</div>';
+                                str += '<div class="col-sm-3 col-xs-6">' + (data.result[i].arg1 || "*****") + '</div>';
+                                str += '<div class="col-sm-5 col-xs-10">' + (data.result[i].arg2 || "*****") + '</div>';
+                                str += '<div class="col-sm-1 col-xs-2"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
                            
                             }
                             $("#visits-res").html(str);
@@ -233,7 +234,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     contentType: "application/json"
                                 }).success(function (data) {
                                     var str = "";
-                                    str += "<div class='col-xs-12 visits'>";
+                                    str += "<div class='row visits'>";
                                     str += "<div class='col-xs-3'>תריך</div>";
                                     str += "<div class='col-xs-3'>סוג הטיפול</div>";
                                     str += "<div class='col-xs-6'>הערות</div></div>";
@@ -241,12 +242,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                     //visits-res
                                     for (var i = 0; i < data.result.length; i++) {
-                                        str += '<div class="col-xs-12 visits">';
-                                        str += '<input type="hidden" value="'+data.result[i].objectId+'"/>';
-                                        str += '<div class="col-xs-3">' + (data.result[i].arg0 || "*****") + '</div>';
-                                        str += '<div class="col-xs-3">' + (data.result[i].arg1 || "*****") + '</div>';
-                                        str += '<div class="col-xs-5">' + (data.result[i].arg2 || "*****") + '</div>';
-                                        str += '<div class="col-xs-1"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
+                                        str += '<div class="row visits">';
+                                        str += '<input type="hidden" value="' + data.result[i].objectId + '"/>';
+                                        str += '<div class="col-sm-3 col-xs-4">' + (data.result[i].arg0 || "*****") + '</div>';
+                                        str += '<div class="col-sm-3 col-xs-6">' + (data.result[i].arg1 || "*****") + '</div>';
+                                        str += '<div class="col-sm-5 col-xs-10">' + (data.result[i].arg2 || "*****") + '</div>';
+                                        str += '<div class="col-sm-1 col-xs-2"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
                                     }
                                     $("#visits-res").html(str);
                                 });
