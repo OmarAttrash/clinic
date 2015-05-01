@@ -178,7 +178,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         }).success(function (data) {
                             var str ="";
                             str+="<div class='row visits'>";
-                            str += "<div class='col-xs-3'>תריך</div>";
+                            str += "<div class='col-xs-3'>תאריך</div>";
                             str += "<div class='col-xs-3'>סוג הטיפול</div>";
                             str += "<div class='col-xs-6'>הערות</div></div>";
                            
@@ -237,7 +237,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 }).success(function (data) {
                                     var str = "";
                                     str += "<div class='row visits'>";
-                                    str += "<div class='col-xs-3'>תריך</div>";
+                                    str += "<div class='col-xs-3'>תאריך</div>";
                                     str += "<div class='col-xs-3'>סוג הטיפול</div>";
                                     str += "<div class='col-xs-6'>הערות</div></div>";
 
@@ -272,7 +272,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
                                 str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
                                 str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
-                                str += '<li><span>רופה מפנה:</span>' + data.result[0].doctor + '</li>';
+                                str += '<li><span>רופא מפנה:</span>' + data.result[0].doctor + '</li>';
                                 str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
                                 $(".patient-info").html(str);
                             }).error(function (error) {
@@ -1240,7 +1240,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-3" style="float:right;line-height:34px;">תריך</div>
+                        <div class="col-md-3" style="float:right;line-height:34px;">תאריך</div>
                         <div class="col-md-9"><input id="v0" type="text" class="form-control" /></div>
                         <div class="col-md-3" style="float:right;line-height:34px;">סוג טיפול</div>
                         <div class="col-md-9"><input id="v1" type="text" class="form-control" /></div>
@@ -1265,7 +1265,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <span class="icon-bar"></span>
                 </button>
                 <div id="logo"></div>
-                <a class="navbar-brand" href="#">ClinicManagment</a>
+                <a class="navbar-brand" href="./search.html">ClinicManagment</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -1289,7 +1289,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <li><span>שם פרטי:</span>xxxxx</li>
                         <li><span>שם  משפחה:</span>xxxxx</li>
                         <li><span>יום הולדת:</span>xxxxx</li>
-                        <li><span>רופה מפנה:</span>xxxxx</li>
+                        <li><span>רופא מפנה:</span>xxxxx</li>
                         <li><span>מוסד ממן:</span>xxxxx</li>
                     </ul>
                 </div>

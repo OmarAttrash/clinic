@@ -60,6 +60,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 contentType: "application/json"
             }).success(function (data){
                 $("#add-p").click(function () {
+                    if ($("#pid").val()=="" ||$("#pfna").val()=="" ||$("#plna").val()=="" ||$("#pdoc").val()=="" ||$("#pbrd").val()=="" ||$("#pnum").val()=="") {
+                        alert("information is missing");
+                    }
                     $.ajax({
                         type: 'POST',
                         headers: {
@@ -71,7 +74,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         data: JSON.stringify({ id: $("#pid").val(), firstName: $("#pfna").val(), lastName: $("#plna").val(), doctor: $("#pdoc").val(), clinic: $("#pcnc option:selected").text(), birthday: $("#pbrd").val(), patientNum: $("#pnum").val() }),
                         contentType: "application/json"
                     }).success(function (data) {
-                        window.location.href = "./patient.html?pid=" + data.result.objectId;
+                        window.location.href = "./search.html";
                     }).error(function (e) {
                         alert("There is an error");
 
@@ -99,7 +102,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
               <span class="icon-bar"></span>
             </button>
               <div id="logo"></div>
-            <a class="navbar-brand" href="#">ClinicManagment</a>
+            <a class="navbar-brand" href="./search.html">ClinicManagment</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -137,7 +140,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="col-sm-9" ><input id="pbrd" class="form-control" type="text"/></div> 
                             </div>
                                                         <div class="row margin-top-10">
-                                  <div class="col-sm-3" style="float:right;">רופה מפנה:</div> 
+                                  <div class="col-sm-3" style="float:right;">רופא מפנה:</div> 
                                 <div class="col-sm-9" ><input id="pdoc" class="form-control" type="text"/></div> 
                             </div>
                                                                                     <div class="row margin-top-10">
