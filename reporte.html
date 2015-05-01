@@ -176,20 +176,38 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         }).success(function (data) {
                             var str ="";
                             str+="<div class='col-xs-12 visits'>";
-                            str += "<div class='col-xs-4'>תריך</div>";
-                            str += "<div class='col-xs-4'>סוג הטיפול</div>";
-                            str += "<div class='col-xs-4'>הערות</div></div>";
+                            str += "<div class='col-xs-3'>תריך</div>";
+                            str += "<div class='col-xs-3'>סוג הטיפול</div>";
+                            str += "<div class='col-xs-6'>הערות</div></div>";
                            
 
                             //visits-res
                             for (var i = 0; i < data.result.length; i++) {
                                 str += '<div class="col-xs-12 visits">';
-                                str += '<div class="col-xs-4">' + (data.result[i].arg0||"*****") + '</div>';
-                                str += '<div class="col-xs-4">' + (data.result[i].arg1||"*****") + '</div>';
-                                str += '<div class="col-xs-4">' + (data.result[i].arg2||"*****") + '</div></div>';
+                                str += '<input type="hidden" value="' + data.result[i].objectId + '"/>';
+                                str += '<div class="col-xs-3">' + (data.result[i].arg0 || "*****") + '</div>';
+                                str += '<div class="col-xs-3">' + (data.result[i].arg1 || "*****") + '</div>';
+                                str += '<div class="col-xs-5">' + (data.result[i].arg2 || "*****") + '</div>';
+                                str += '<div class="col-xs-1"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
                            
                             }
                             $("#visits-res").html(str);
+                            $("body").on("click",".remove-btn",function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    headers: {
+                                        'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                        'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                        'X-Parse-Session-Token': $.cookie("sessionClinic")
+                                    },
+                                    url: "https://api.parse.com/1/functions/RemoveVisit",
+                                    data: JSON.stringify({ objectId: $(this).siblings().find("input[type=hidden]").val()}),
+                                    contentType: "application/json"
+                                }).success(function (data) {
+                                    location.reload();
+                                });
+                              
+                            });
                         });
                         $("#visit-btn").click(function () {
                             $.ajax({
@@ -216,18 +234,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 }).success(function (data) {
                                     var str = "";
                                     str += "<div class='col-xs-12 visits'>";
-                                    str += "<div class='col-xs-4'>תריך</div>";
-                                    str += "<div class='col-xs-4'>סוג הטיפול</div>";
-                                    str += "<div class='col-xs-4'>הערות</div></div>";
+                                    str += "<div class='col-xs-3'>תריך</div>";
+                                    str += "<div class='col-xs-3'>סוג הטיפול</div>";
+                                    str += "<div class='col-xs-6'>הערות</div></div>";
 
 
                                     //visits-res
                                     for (var i = 0; i < data.result.length; i++) {
                                         str += '<div class="col-xs-12 visits">';
-                                        str += '<div class="col-xs-4">' + (data.result[i].arg0 || "*****") + '</div>';
-                                        str += '<div class="col-xs-4">' + (data.result[i].arg1 || "*****") + '</div>';
-                                        str += '<div class="col-xs-4">' + (data.result[i].arg2 || "*****") + '</div></div>';
-
+                                        str += '<input type="hidden" value="'+data.result[i].objectId+'"/>';
+                                        str += '<div class="col-xs-3">' + (data.result[i].arg0 || "*****") + '</div>';
+                                        str += '<div class="col-xs-3">' + (data.result[i].arg1 || "*****") + '</div>';
+                                        str += '<div class="col-xs-5">' + (data.result[i].arg2 || "*****") + '</div>';
+                                        str += '<div class="col-xs-1"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
                                     }
                                     $("#visits-res").html(str);
                                 });
@@ -1259,7 +1278,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-top">
             <div class="search" >
 
-                <div class="col-md-12">
+                <div >
                     <h3>פרטי המטופל</h3>
                     <ul class="patient-info">
                         <li><span>מספר חולה:</span>xxxxx</li>
@@ -1509,7 +1528,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                            
                         </div>
                         <div class="row">
-                            <input type="button" class="col-md-12 btn" data-toggle="modal" data-target="#visits-modal" value="הוספה" id="add-visit-btn" />
+                            <input type="button" class="col-md-12 btn btn btn-piramry mine" data-toggle="modal" data-target="#visits-modal" value="הוספה" id="add-visit-btn" />
                         </div>
 
                     </div>
