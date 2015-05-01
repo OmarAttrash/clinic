@@ -176,12 +176,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             data: JSON.stringify({ reportId: QueryString.rid }),
                             contentType: "application/json"
                         }).success(function (data) {
-                            var str ="";
-                            str+="<div class='row visits'>";
+                            var str = "";
+                            str += "<div class='row visits'>";
                             str += "<div class='col-xs-3'>תאריך</div>";
                             str += "<div class='col-xs-3'>סוג הטיפול</div>";
                             str += "<div class='col-xs-6'>הערות</div></div>";
-                           
+
 
                             //visits-res
                             for (var i = 0; i < data.result.length; i++) {
@@ -191,7 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 str += '<div class="col-sm-3 col-xs-6">' + (data.result[i].arg1 || "*****") + '</div>';
                                 str += '<div class="col-sm-5 col-xs-10">' + (data.result[i].arg2 || "*****") + '</div>';
                                 str += '<div class="col-sm-1 col-xs-2"><input type="button" class="remove-btn btn-danger btn-xs" value="X"/></div></div>';
-                           
+
                             }
                             $("#visits-res").html(str);
                             $("body").on("click", ".remove-btn", function () {
@@ -209,7 +209,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 }).success(function (data) {
                                     location.reload();
                                 });
-                              
+
                             });
                         });
                         $("#visit-btn").click(function () {
@@ -255,259 +255,259 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 });
                             });
                         });
-                            $.ajax({
-                                type: 'POST',
-                                headers: {
-                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
-                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
-                                },
-                                data: JSON.stringify({ id: QueryString.pid }),
-                                url: "https://api.parse.com/1/functions/GetPatient",
-                                contentType: "application/json"
-                            }).success(function (data) {
-                                var str = "";
-                                str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
-                                str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
-                                str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
-                                str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
-                                str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
-                                str += '<li><span>רופא מפנה:</span>' + data.result[0].doctor + '</li>';
-                                str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
-                                $(".patient-info").html(str);
-                            }).error(function (error) {
-                                alert(JSON.parse(error.responseText).error);
-                            });
-                            for (var i = 0; i < $("input[name=reports-modal]").length; i++) {
-                                var box = $("input[name=reports-modal]")[i];
-                                if (box.value == data.result.arg0) {
+                        $.ajax({
+                            type: 'POST',
+                            headers: {
+                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                'X-Parse-Session-Token': $.cookie("sessionClinic")
+                            },
+                            data: JSON.stringify({ id: QueryString.pid }),
+                            url: "https://api.parse.com/1/functions/GetPatient",
+                            contentType: "application/json"
+                        }).success(function (data) {
+                            var str = "";
+                            str += '<li><span>מספר חולה:</span>' + data.result[0].patientNum + '</li>';
+                            str += '<li><span>תז:</span>' + data.result[0].ID + '</li>';
+                            str += '<li><span>שם פרטי:</span>' + data.result[0].firstName + '</li>';
+                            str += '<li><span>שם  משפחה:</span>' + data.result[0].lastName + '</li>';
+                            str += '<li><span>יום הולדת:</span>' + data.result[0].birthday + '</li>';
+                            str += '<li><span>רופא מפנה:</span>' + data.result[0].doctor + '</li>';
+                            str += '<li><span>מוסד ממן:</span>' + data.result[0].clinic + '</li>';
+                            $(".patient-info").html(str);
+                        }).error(function (error) {
+                            alert(JSON.parse(error.responseText).error);
+                        });
+                        for (var i = 0; i < $("input[name=reports-modal]").length; i++) {
+                            var box = $("input[name=reports-modal]")[i];
+                            if (box.value == data.result.arg0) {
+                                $(box).attr('checked', true);
+                            }
+                        }
+                        $("#reports-btn").trigger("click");
+                        $("#arg1").val(data.result.arg1);
+                        $("#arg2").val(data.result.arg2);
+                        $("#arg3").val(data.result.arg3);
+                        $("#arg4").val(data.result.arg4);
+                        $("#arg5").val(data.result.arg5);
+                        $("#arg6").val(data.result.arg6);
+                        $("#arg7").val(data.result.arg7);
+                        $("#arg8").val(data.result.arg8);
+                        $("#arg9").val(data.result.arg9);
+
+                        var vall = "option2";
+                        if (data.result.arg10.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=ranges]").length; i++) {
+                            if ($($("input[name=ranges]")[i]).val() == vall) {
+                                $($("input[name=ranges]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg10.res == "No") {
+                            for (var i = 0; i < data.result.arg10.arr.length; i++) {
+                                for (var j = 0; j < $("input[name=ranges-modal]").length; j++) {
+                                    var box = $("input[name=ranges-modal]")[j];
+                                    if ($(box).val() == data.result.arg10.arr[i].key) {
+                                        $(box).attr('checked', true);
+                                        $($(box).parent().siblings()[0]).val(data.result.arg10.arr[i].value);
+                                    }
+                                }
+                            }
+                            $("#ranges-btn").trigger("click");
+                        }
+
+                        var vall = "option2";
+                        if (data.result.arg11.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=muscles]").length; i++) {
+                            if ($($("input[name=muscles]")[i]).val() == vall) {
+                                $($("input[name=muscles]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg11.res == "No") {
+                            $("#muscles-text").val(data.result.arg11.text);
+                            $("#muscles-btn").trigger("click");
+                        }
+
+
+                        var vall = "option2";
+                        if (data.result.arg12.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=walking]").length; i++) {
+                            if ($($("input[name=walking]")[i]).val() == vall) {
+                                $($("input[name=walking]")[i]).attr('checked', true);
+                            }
+                        }
+                        if (data.result.arg12.res == "No") {
+                            for (var j = 0; j < $("input[name=walking-modal]").length; j++) {
+                                var box = $("input[name=walking-modal]")[j];
+                                if (data.result.arg12.text == $(box).val()) {
                                     $(box).attr('checked', true);
                                 }
                             }
-                            $("#reports-btn").trigger("click");
-                            $("#arg1").val(data.result.arg1);
-                            $("#arg2").val(data.result.arg2);
-                            $("#arg3").val(data.result.arg3);
-                            $("#arg4").val(data.result.arg4);
-                            $("#arg5").val(data.result.arg5);
-                            $("#arg6").val(data.result.arg6);
-                            $("#arg7").val(data.result.arg7);
-                            $("#arg8").val(data.result.arg8);
-                            $("#arg9").val(data.result.arg9);
+                            $("#walking-btn").trigger("click");
+                        }
 
-                            var vall = "option2";
-                            if (data.result.arg10.res == "Yes") {
-                                vall = "option1";
+
+                        var vall = "option2";
+                        if (data.result.arg13.res == "Yes") {
+                            vall = "option1";
+                        }
+                        for (var i = 0; i < $("input[name=activity]").length; i++) {
+                            if ($($("input[name=activity]")[i]).val() == vall) {
+                                $($("input[name=activity]")[i]).attr('checked', true);
                             }
-                            for (var i = 0; i < $("input[name=ranges]").length; i++) {
-                                if ($($("input[name=ranges]")[i]).val() == vall) {
-                                    $($("input[name=ranges]")[i]).attr('checked', true);
+                        }
+
+                        for (var i = 0; i < $("input[name=checks-modal]").length; i++) {
+                            var box = $("input[name=checks-modal]")[i];
+                            for (var j = 0 ; j < data.result.arg14.res.length; j++) {
+                                if ($(box).val() == data.result.arg14.res[j]) {
+                                    $(box).attr('checked', true);
                                 }
                             }
-                            if (data.result.arg10.res == "No") {
-                                for (var i = 0; i < data.result.arg10.arr.length; i++) {
-                                    for (var j = 0; j < $("input[name=ranges-modal]").length; j++) {
-                                        var box = $("input[name=ranges-modal]")[j];
-                                        if ($(box).val() == data.result.arg10.arr[i].key) {
-                                            $(box).attr('checked', true);
-                                            $($(box).parent().siblings()[0]).val(data.result.arg10.arr[i].value);
-                                        }
-                                    }
-                                }
-                                $("#ranges-btn").trigger("click");
+                        }
+                        $("#checks-btn").trigger("click");
+
+                        $("#arg14").val(data.result.arg15.res);
+
+
+                        for (var i = 0; i < $("input[name=goals]").length; i++) {
+                            if ($($("input[name=goals]")[i]).val() == data.result.arg16.res) {
+                                $($("input[name=goals]")[i]).attr('checked', true);
                             }
+                        }
 
-                            var vall = "option2";
-                            if (data.result.arg11.res == "Yes") {
-                                vall = "option1";
+                        for (var i = 0; i < $("input[name=grade]").length; i++) {
+                            if ($($("input[name=grade]")[i]).val() == data.result.arg17.res) {
+                                $($("input[name=grade]")[i]).attr('checked', true);
                             }
-                            for (var i = 0; i < $("input[name=muscles]").length; i++) {
-                                if ($($("input[name=muscles]")[i]).val() == vall) {
-                                    $($("input[name=muscles]")[i]).attr('checked', true);
-                                }
+                        }
+
+                        for (var i = 0; i < $("input[name=will]").length; i++) {
+                            if ($($("input[name=will]")[i]).val() == data.result.arg18.res) {
+                                $($("input[name=will]")[i]).attr('checked', true);
                             }
-                            if (data.result.arg11.res == "No") {
-                                $("#muscles-text").val(data.result.arg11.text);
-                                $("#muscles-btn").trigger("click");
+                        }
+
+
+                        for (var i = 0; i < $("input[name=possible]").length; i++) {
+                            if ($($("input[name=possible]")[i]).val() == data.result.arg19.res) {
+                                $($("input[name=possible]")[i]).attr('checked', true);
                             }
+                        }
+
+                        $("#notes").val(data.result.arg20);
 
 
-                            var vall = "option2";
-                            if (data.result.arg12.res == "Yes") {
-                                vall = "option1";
-                            }
-                            for (var i = 0; i < $("input[name=walking]").length; i++) {
-                                if ($($("input[name=walking]")[i]).val() == vall) {
-                                    $($("input[name=walking]")[i]).attr('checked', true);
-                                }
-                            }
-                            if (data.result.arg12.res == "No") {
-                                for (var j = 0; j < $("input[name=walking-modal]").length; j++) {
-                                    var box = $("input[name=walking-modal]")[j];
-                                    if (data.result.arg12.text == $(box).val()) {
-                                        $(box).attr('checked', true);
-                                    }
-                                }
-                                $("#walking-btn").trigger("click");
-                            }
-
-
-                            var vall = "option2";
-                            if (data.result.arg13.res == "Yes") {
-                                vall = "option1";
-                            }
-                            for (var i = 0; i < $("input[name=activity]").length; i++) {
-                                if ($($("input[name=activity]")[i]).val() == vall) {
-                                    $($("input[name=activity]")[i]).attr('checked', true);
-                                }
-                            }
-
-                            for (var i = 0; i < $("input[name=checks-modal]").length; i++) {
-                                var box = $("input[name=checks-modal]")[i];
-                                for (var j = 0 ; j < data.result.arg14.res.length; j++) {
-                                    if ($(box).val() == data.result.arg14.res[j]) {
-                                        $(box).attr('checked', true);
-                                    }
-                                }
-                            }
-                            $("#checks-btn").trigger("click");
-
-                            $("#arg14").val(data.result.arg15.res);
-
-
-                            for (var i = 0; i < $("input[name=goals]").length; i++) {
-                                if ($($("input[name=goals]")[i]).val() == data.result.arg16.res) {
-                                    $($("input[name=goals]")[i]).attr('checked', true);
-                                }
-                            }
-
-                            for (var i = 0; i < $("input[name=grade]").length; i++) {
-                                if ($($("input[name=grade]")[i]).val() == data.result.arg17.res) {
-                                    $($("input[name=grade]")[i]).attr('checked', true);
-                                }
-                            }
-
-                            for (var i = 0; i < $("input[name=will]").length; i++) {
-                                if ($($("input[name=will]")[i]).val() == data.result.arg18.res) {
-                                    $($("input[name=will]")[i]).attr('checked', true);
-                                }
-                            }
-
-
-                            for (var i = 0; i < $("input[name=possible]").length; i++) {
-                                if ($($("input[name=possible]")[i]).val() == data.result.arg19.res) {
-                                    $($("input[name=possible]")[i]).attr('checked', true);
-                                }
-                            }
-
-                            $("#notes").val(data.result.arg20);
-
-
-                            $(".event-at input[type=text],.event-at textarea").each(function () {
-                                $(this).parent().append('<div class="col-md-9 print">' + $(this).val() + '</div>');
-                            });
-
+                        $(".event-at input[type=text],.event-at textarea").each(function () {
+                            $(this).parent().append('<div class="col-md-9 print">' + $(this).val() + '</div>');
                         });
-                        /*******************************************/
-                        $("#print-btn").click(function () {
-                            window.print();
-                        });
-                        $("#remove-btn").click(function () {
-                            $.ajax({
-                                type: 'POST',
-                                headers: {
-                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
-                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
-                                },
-                                url: "https://api.parse.com/1/functions/RemoveReport",
-                                data: JSON.stringify({ objectId: QueryString.rid }),
-                                contentType: "application/json"
-                            }).success(function (data) {
-                                window.location.href = "./patient.html?pid=" + QueryString.pid;
-                            }).error(function () {
-                                alert("Erorr!");
-                                location.reload();
-                            });
-                        });
-                        $("#add-btn").click(function () {
-                            var str = "";
-                            var res = {};
-                            res.objectId = QueryString.rid;
-
-                            for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
-                                var box = $("input[name=reports-modal]:checked")[i];
-                                str += (box).value;
-                            }
-                            res.arg0 = str;
-                            res.arg1 = $("#arg1").val();
-                            res.arg2 = $("#arg2").val();
-                            res.arg3 = $("#arg3").val();
-                            res.arg4 = $("#arg4").val();
-                            res.arg5 = $("#arg5").val();
-                            res.arg6 = $("#arg6").val();
-                            res.arg7 = $("#arg7").val();
-                            res.arg8 = $("#arg8").val();
-                            res.arg9 = $("#arg9").val();
-
-                            var arrr = [];
-                            for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
-                                var box = $("input[name=ranges-modal]:checked")[i];
-                                arrr.push({
-                                    key: (box).value,
-                                    value: $(box).parent().siblings()[0].value
-                                });
-                            }
-                            res.arg10 = { res: ($("input[name=ranges]:checked").val() == "option1") ? ("Yes") : ("No"), arr: arrr };
-
-                            str = $("#muscles-text").val();
-                            res.arg11 = { res: ($("input[name=muscles]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
-
-                            str = $("input[name=walking-modal]:checked").val();
-                            res.arg12 = { res: ($("input[name=walking]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
-
-
-                            res.arg13 = { res: ($("input[name=activity]:checked").val() == "option1") ? ("Yes") : ("No") };
-
-                            arrr = [];
-                            for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
-                                var box = $("input[name=checks-modal]:checked")[i];
-                                arrr.push((box).value);
-                            }
-                            res.arg14 = { res: arrr };
-                            res.arg15 = { res: $("#arg14").val() };
-                            res.arg16 = { res: $("input[name=goals]:checked").val() };
-                            res.arg17 = { res: $("input[name=grade]:checked").val() };
-                            res.arg18 = { res: $("input[name=will]:checked").val() };
-                            res.arg19 = { res: $("input[name=possible]:checked").val() };
-                            res.arg20 = $("#notes").val();
-
-                            $.ajax({
-                                type: 'POST',
-                                headers: {
-                                    'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
-                                    'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
-                                    'X-Parse-Session-Token': $.cookie("sessionClinic")
-                                },
-                                url: "https://api.parse.com/1/functions/EditReport",
-                                data: JSON.stringify(res),
-                                contentType: "application/json"
-                            }).success(function (data) {
-                                window.location.href = "./patient.html?pid=" + data.result;
-                            });
-
-                        });
-
-                    }).error(function (e) {
-                        $.removeCookie('sessionClinic');
-                        window.location.href = "./index.html";
 
                     });
-                }
+                    /*******************************************/
+                    $(".print-btn").click(function () {
+                        window.print();
+                    });
+                    $("#remove-btn").click(function () {
+                        $.ajax({
+                            type: 'POST',
+                            headers: {
+                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                'X-Parse-Session-Token': $.cookie("sessionClinic")
+                            },
+                            url: "https://api.parse.com/1/functions/RemoveReport",
+                            data: JSON.stringify({ objectId: QueryString.rid }),
+                            contentType: "application/json"
+                        }).success(function (data) {
+                            window.location.href = "./patient.html?pid=" + QueryString.pid;
+                        }).error(function () {
+                            alert("Erorr!");
+                            location.reload();
+                        });
+                    });
+                    $("#add-btn").click(function () {
+                        var str = "";
+                        var res = {};
+                        res.objectId = QueryString.rid;
+
+                        for (var i = 0; i < $("input[name=reports-modal]:checked").length; i++) {
+                            var box = $("input[name=reports-modal]:checked")[i];
+                            str += (box).value;
+                        }
+                        res.arg0 = str;
+                        res.arg1 = $("#arg1").val();
+                        res.arg2 = $("#arg2").val();
+                        res.arg3 = $("#arg3").val();
+                        res.arg4 = $("#arg4").val();
+                        res.arg5 = $("#arg5").val();
+                        res.arg6 = $("#arg6").val();
+                        res.arg7 = $("#arg7").val();
+                        res.arg8 = $("#arg8").val();
+                        res.arg9 = $("#arg9").val();
+
+                        var arrr = [];
+                        for (var i = 0; i < $("input[name=ranges-modal]:checked").length; i++) {
+                            var box = $("input[name=ranges-modal]:checked")[i];
+                            arrr.push({
+                                key: (box).value,
+                                value: $(box).parent().siblings()[0].value
+                            });
+                        }
+                        res.arg10 = { res: ($("input[name=ranges]:checked").val() == "option1") ? ("Yes") : ("No"), arr: arrr };
+
+                        str = $("#muscles-text").val();
+                        res.arg11 = { res: ($("input[name=muscles]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
+
+                        str = $("input[name=walking-modal]:checked").val();
+                        res.arg12 = { res: ($("input[name=walking]:checked").val() == "option1") ? ("Yes") : ("No"), text: str };
 
 
+                        res.arg13 = { res: ($("input[name=activity]:checked").val() == "option1") ? ("Yes") : ("No") };
+
+                        arrr = [];
+                        for (var i = 0; i < $("input[name=checks-modal]:checked").length; i++) {
+                            var box = $("input[name=checks-modal]:checked")[i];
+                            arrr.push((box).value);
+                        }
+                        res.arg14 = { res: arrr };
+                        res.arg15 = { res: $("#arg14").val() };
+                        res.arg16 = { res: $("input[name=goals]:checked").val() };
+                        res.arg17 = { res: $("input[name=grade]:checked").val() };
+                        res.arg18 = { res: $("input[name=will]:checked").val() };
+                        res.arg19 = { res: $("input[name=possible]:checked").val() };
+                        res.arg20 = $("#notes").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            headers: {
+                                'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                                'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                                'X-Parse-Session-Token': $.cookie("sessionClinic")
+                            },
+                            url: "https://api.parse.com/1/functions/EditReport",
+                            data: JSON.stringify(res),
+                            contentType: "application/json"
+                        }).success(function (data) {
+                            window.location.href = "./patient.html?pid=" + data.result;
+                        });
+
+                    });
+
+                }).error(function (e) {
+                    $.removeCookie('sessionClinic');
+                    window.location.href = "./index.html";
 
                 });
+            }
+
+
+
+        });
 
 
 
@@ -1275,13 +1275,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
-
+    <div class="print row">
+        <div style="width:45%;float:left;padding:3px;text-align:center;">
+            <h4>مركز العلاج الطبيعي فيزوترابيا</h4>
+            <h4>عرابه 24945</h4>
+        </div>
+        <img src="images/logo.jpg" style="width:10%;float:left;" />
+        <div style="width:45%;padding:3px;text-align:center;">
+            <h4>המכון לפיזיתרפיה שיקום ניורולוגיה אורטופדי</h4>
+            <h4>עראבה 24945</h4>
+        </div>
+    </div>
+    <div class="print row" style="border-top:1px dotted #000;border-bottom:1px dotted #000;text-align:center;">
+        <div style="width:33%;float:left">بإدارة محسن نصار</div>
+        <div style="width:33%;float:left">טל.046746939/פקס.046745939</div>
+        <div style="width:33%;float:left">נסאר מוחסן-פיזותפיסט מוסמך</div>
+    </div>
+    <p class="print" style="font-size:9px;">עוסק מורשה מס 023248123</p>
 
     <div class="header" style="padding-top:5px;">
         <div class="col-top">
-            <div class="search" >
+            <div class="search">
 
-                <div >
+                <div>
                     <h3>פרטי המטופל</h3>
                     <ul class="patient-info">
                         <li><span>מספר חולה:</span>xxxxx</li>
@@ -1293,6 +1309,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <li><span>מוסד ממן:</span>xxxxx</li>
                     </ul>
                 </div>
+
             </div>
             <div class="clearfix"> </div>
 
@@ -1523,16 +1540,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
 
                         <div class="col-xs-3">
-                            <input type="button" id="print-btn" class="btn mine" value="הדפס" />
+                            <input type="button" id="print-btn" class="btn mine print-btn" value="הדפס" />
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="visits">
                         <div class="row" id="visits-res">
-                           
+
                         </div>
                         <div class="row">
-                            <input type="button" class="col-md-12 btn btn btn-piramry mine" data-toggle="modal" data-target="#visits-modal" value="הוספה" id="add-visit-btn" />
-                        </div>
+                            <div class="col-xs-9">
+                                <input type="button" class="col-md-12 btn btn btn-piramry mine" data-toggle="modal" data-target="#visits-modal" value="הוספה" id="add-visit-btn" />
+                            </div>
+                                 <div class="col-xs-3">
+                                     <input type="button"  class="btn mine print-btn" value="הדפס" />
+                            </div>
+                          </div>
 
                     </div>
                 </div>

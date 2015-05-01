@@ -24,13 +24,24 @@ textarea {
 #taps {
     display:none;
 }
+#visits {
+    display:block;
+}
 .sub.report-element .row,.main.report-element .row{
     border:1px groove #111;   
 }
-
+.header {
+    padding-top:0;
+    padding:0!important;
+}
 .patient-info {
     border:1px solid #111;
-    height:50px;
+    height:25px;
+    margin:0;
+}
+.search {
+    margin:2px!important;
+    height:50px!important;
 }
 .patient-info li {
     float:right;
@@ -51,12 +62,13 @@ textarea {
      float:left;
 }
 h3 {
-    font-size:16px;
+    font-size:14px;
     font-weight:800;
 }
 h4 {
-    font-size:14px;
+    font-size:12px;
     font-weight:800;
+    margin:1px;
 }
 #reports-res {
       font-weight:800;
@@ -68,7 +80,7 @@ h4 {
     border:1px dashed #111;
     margin:5px;
     padding:0 5px;
-    min-height:180px;
+    min-height:165px;
     margin-bottom:20px;
 }
 .side-report .row .radio{
@@ -78,6 +90,28 @@ h4 {
 .footer-class {
     display:none;
 }
+#visits-res {
+    padding:0!important;
+}
+.visits {
+    width:100%;
+}
+.visits>div{
+    width:32%;
+    float:left;
+    border:1px solid black;
+}
+.visits>div:last-child{
+    width:0;
+    float:left;
+    border:0;
+}
+.visits:first-child>div:last-child{
+  width:32%;
+    float:left;
+    border:1px solid black;
+}
+
 
   a[href]:after {
     content: " (" attr(href) ")";

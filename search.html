@@ -38,7 +38,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     url: "https://api.parse.com/1/functions/test",
                     contentType: "application/json"
                 }).success(function (data) {
-                    $("#searcher").click(function () {
+                    $("body").on("click", ".remove-btn", function () {
+                        console.dir($(this).parent().siblings("input[type=hidden]"));
                         $.ajax({
                             type: 'POST',
                             headers: {
@@ -46,28 +47,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
                                 'X-Parse-Session-Token': $.cookie("sessionClinic")
                             },
-                            data: JSON.stringify({ "text": $("#searchval").val() }),
-                            url: "https://api.parse.com/1/functions/Search",
+                            url: "https://api.parse.com/1/functions/RemovePatient",
+                            data: JSON.stringify({ objectId: $(this).siblings("input[type=hidden]").val() }),
                             contentType: "application/json"
                         }).success(function (data) {
-                            var str = "";
-                            data.result.forEach(function (patient) {
-                                str += '<a href="./patient.html?pid=' + patient.objectId + '">';
-                                str += '<div class="event-top"><div ><ul class="patient-info">';
-                                str += '<li><span>מספר חולה:</span>' + patient.patientNum + '</li>';
-                                str += '<li><span>תז:</span>' + patient.ID + '</li>';
-                                str += '<li><span>שם פרטי:</span>' + patient.firstName + '</li>';
-                                str += '<li><span>שם  משפחה:</span>' + patient.lastName + '</li>';
-                                str += '<li><span>יום הולדת:</span>' + patient.birthday + '</li>';
-                                str += '<li><span>רופא מפנה:</span>' + patient.doctor + '</li>';
-                                str += '<li><span>מוסד ממן:</span>' + patient.clinic + '</li>';
-                                str += '</ul></div><div class="clearfix"> </div></div></a>';
-                            });
-                            $("#patients").html(str);
-                        }).error(function (error) {
-                            alert("Something went wrong!");
+                            location.reload();
                         });
+
                     });
+
+                $("#searcher").click(function () {
                     $.ajax({
                         type: 'POST',
                         headers: {
@@ -75,13 +64,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
                             'X-Parse-Session-Token': $.cookie("sessionClinic")
                         },
-                        url: "https://api.parse.com/1/functions/LoadPatients",
+                        data: JSON.stringify({ "text": $("#searchval").val() }),
+                        url: "https://api.parse.com/1/functions/Search",
                         contentType: "application/json"
                     }).success(function (data) {
                         var str = "";
                         data.result.forEach(function (patient) {
                             str += '<a href="./patient.html?pid=' + patient.objectId + '">';
                             str += '<div class="event-top"><div ><ul class="patient-info">';
+                            str += '<input type="button" class="remove-btn btn-danger btn-xs" value="X"/>';
+                            str += '<input type="hidden" value="' + patient.objectId + '"/>';
                             str += '<li><span>מספר חולה:</span>' + patient.patientNum + '</li>';
                             str += '<li><span>תז:</span>' + patient.ID + '</li>';
                             str += '<li><span>שם פרטי:</span>' + patient.firstName + '</li>';
@@ -90,20 +82,50 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             str += '<li><span>רופא מפנה:</span>' + patient.doctor + '</li>';
                             str += '<li><span>מוסד ממן:</span>' + patient.clinic + '</li>';
                             str += '</ul></div><div class="clearfix"> </div></div></a>';
-
                         });
-                        $("#patients").append(str);
+                        $("#patients").html(str);
                     }).error(function (error) {
                         alert("Something went wrong!");
-                        window.location.href = "./index.html";
                     });
-
-                }).error(function (e) {
-                    $.removeCookie('sessionClinic');
-                    window.location.href = "./index.html";
-
                 });
-            }
+                $.ajax({
+                    type: 'POST',
+                    headers: {
+                        'X-Parse-Application-Id': "wz33qu6TXqJb722TM7XDWO7K3G8NPoXDSOwQkqZ8",
+                        'X-Parse-REST-API-Key': "FrH8vkN7J6p70OuC2rbCLE8b3PRCUrAUHeXVZWHm",
+                        'X-Parse-Session-Token': $.cookie("sessionClinic")
+                    },
+                    url: "https://api.parse.com/1/functions/LoadPatients",
+                    contentType: "application/json"
+                }).success(function (data) {
+                    var str = "";
+                    data.result.forEach(function (patient) {
+                        str += '<a href="./patient.html?pid=' + patient.objectId + '">';
+                        str += '<div class="event-top"><div ><ul class="patient-info">';
+                        str += '<input type="button" class="remove-btn btn-danger btn-xs" value="X"/>';
+                        str += '<input type="hidden" value="' + patient.objectId + '"/>';
+                        str += '<li><span>מספר חולה:</span>' + patient.patientNum + '</li>';
+                        str += '<li><span>תז:</span>' + patient.ID + '</li>';
+                        str += '<li><span>שם פרטי:</span>' + patient.firstName + '</li>';
+                        str += '<li><span>שם  משפחה:</span>' + patient.lastName + '</li>';
+                        str += '<li><span>יום הולדת:</span>' + patient.birthday + '</li>';
+                        str += '<li><span>רופא מפנה:</span>' + patient.doctor + '</li>';
+                        str += '<li><span>מוסד ממן:</span>' + patient.clinic + '</li>';
+                        str += '</ul></div><div class="clearfix"> </div></div></a>';
+
+                    });
+                    $("#patients").append(str);
+                }).error(function (error) {
+                    alert("Something went wrong!");
+                    window.location.href = "./index.html";
+                });
+
+            }).error(function (e) {
+                $.removeCookie('sessionClinic');
+                window.location.href = "./index.html";
+
+            });
+        }
         });
     </script>
 </head>
@@ -133,8 +155,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-top">
             <div class="search">
                 <div class="search-in">
-                        <input type="text" id="searchval" value="מטופל" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'מטופל';}">
-                        <input type="submit" id="searcher" value="חיפוש">
+                    <input type="text" id="searchval" value="מטופל" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'מטופל';}">
+                    <input type="submit" id="searcher" value="חיפוש">
                 </div>
             </div>
             <div class="clearfix"> </div>
