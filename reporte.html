@@ -194,7 +194,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                            
                             }
                             $("#visits-res").html(str);
-                            $("body").on("click",".remove-btn",function () {
+                            $("body").on("click", ".remove-btn", function () {
+                                console.dir($(this).parent().siblings("input[type=hidden]"));
                                 $.ajax({
                                     type: 'POST',
                                     headers: {
@@ -203,7 +204,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         'X-Parse-Session-Token': $.cookie("sessionClinic")
                                     },
                                     url: "https://api.parse.com/1/functions/RemoveVisit",
-                                    data: JSON.stringify({ objectId: $(this).siblings().find("input[type=hidden]").val()}),
+                                    data: JSON.stringify({ objectId: $(this).parent().siblings("input[type=hidden]").val() }),
                                     contentType: "application/json"
                                 }).success(function (data) {
                                     location.reload();
