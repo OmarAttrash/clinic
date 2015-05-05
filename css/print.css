@@ -90,8 +90,18 @@ h4 {
 .footer-class {
     display:none;
 }
+#visits {page-break-before: always;}
+#visits {
+    margin-top:50px;
+    padding-top:50px;
+
+      display:block!important;
+      visibility:visible!important;
+      opacity:1!important;  
+}
 #visits-res {
     padding:0!important;
+    display:block!important;
 }
 .visits {
     width:100%;
